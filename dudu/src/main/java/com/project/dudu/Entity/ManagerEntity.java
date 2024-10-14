@@ -32,5 +32,5 @@ public class ManagerEntity {
     @OneToMany(mappedBy = "managerEntity", orphanRemoval = true)
     @ToString.Exclude
     @Builder.Default
-    private List<DepartmentEntity> departments = new ArrayList<>();  // 소속 부서 또는 관리 부서 (다대일 관계 예시)
+    private List<DepartmentEntity> departments = new ArrayList<>();  // *소속 부서 또는 관리 부서 (다대일 관계 예시)
 }

@@ -14,27 +14,22 @@ import java.util.List;
 @Entity
 @Data
 @EntityListeners(value = DefaultListener.class)
-@Table(name = "Student_T")
-public class StudentEntity implements IEntityAdapter<LocalDateTime>{
+@Table(name = "Cabinet_T")
+public class CabinetEntity implements IEntityAdapter<LocalDateTime> {
     @Id
-    private long studentId;
-    private String password;
-    private String studentName;
+    private Long cabinetId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "department")
+    @Column(name = "cabinet_department")
     private Colleges department;
 
-    @Column(name = "create_at")
     private LocalDateTime createAt;
-    @Column(name = "update_at")
     private LocalDateTime updateAt;
 
 
     //PK 설정
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "cabinet")
     @ToString.Exclude
     @Builder.Default
     private List<ReservationEntity> reservationList = new ArrayList<>();
-
 }

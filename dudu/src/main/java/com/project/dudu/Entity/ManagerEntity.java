@@ -28,8 +28,8 @@ public class ManagerEntity {
     @Column(length = 100, nullable = false)
     private String name;  // 관리자 이름
 
-    @ManyToOne
-    @JoinColumn(name = "university_id", nullable = false)
-    private CollegeEntity college;  // 소속 대학 (다대일 관계)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CollegeEnum college;  // 소속 대학 (ENUM)
 
 }

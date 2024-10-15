@@ -28,11 +28,8 @@ public class ManagerEntity {
     @Column(length = 100, nullable = false)
     private String name;  // 관리자 이름
 
-    @Column(length = 100, nullable = false)
-    private String university;  // 소속 대학
+    @ManyToOne
+    @JoinColumn(name = "university_id", nullable = false)
+    private CollegeEntity college;  // 소속 대학 (다대일 관계)
 
-    @OneToMany(mappedBy = "managerEntity", orphanRemoval = true)
-    @ToString.Exclude
-    @Builder.Default
-    private List<DepartmentEntity> departments = new ArrayList<>();  // *소속 부서 또는 관리 부서 (다대일 관계 예시)
 }

@@ -31,5 +31,4 @@ public class ManagerEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CollegeEnum college;  // 소속 대학 (ENUM)
-
 }

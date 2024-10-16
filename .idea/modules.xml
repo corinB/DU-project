@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dudu.dudu.iml" filepath="$PROJECT_DIR$/.idea/modules/dudu.dudu.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dudu.dudu.main.iml" filepath="$PROJECT_DIR$/.idea/modules/dudu.dudu.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dudu.dudu.test.iml" filepath="$PROJECT_DIR$/.idea/modules/dudu.dudu.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dudu.iml" filepath="$PROJECT_DIR$/.idea/modules/dudu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dudu.main.iml" filepath="$PROJECT_DIR$/.idea/modules/dudu.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dudu.test.iml" filepath="$PROJECT_DIR$/.idea/modules/dudu.test.iml" />
     </modules>
   </component>
 </project>

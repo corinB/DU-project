@@ -11,9 +11,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "lost_item_report")
+@EntityListeners(value = DefaultListener.class)
+@Table(name = "Lost_item_report_T")
 @Entity
-public class LostItemReportEntity {
+public class LostItemReportEntity implements IEntityAdapter<LocalDateTime>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;  // 분실물 신고 번호
@@ -32,4 +33,9 @@ public class LostItemReportEntity {
 
     @Column(length = 100, nullable = true)
     private String foundPerson;  //습득인
+
+    @Column(name = "create_at")
+    private LocalDateTime createAt;
+    @Column(name = "update_at")
+    private LocalDateTime updateAt;
 }

@@ -1,6 +1,7 @@
 spring:
   application:
   name: dudu
+<<<<<<< HEAD
   servlet:
     encoding:
       charset: UTF-8
@@ -22,3 +23,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
+=======
+
+>>>>>>> origin/gw

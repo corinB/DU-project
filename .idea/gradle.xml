@@ -5,7 +5,11 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/dudu" />
+<<<<<<< HEAD
         <option name="gradleJvm" value="#JAVA_HOME" />
+=======
+        <option name="gradleJvm" value="20" />
+>>>>>>> origin/gw
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/dudu" />

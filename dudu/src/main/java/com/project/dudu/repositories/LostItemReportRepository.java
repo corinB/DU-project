@@ -1,6 +1,6 @@
-package com.project.dudu.Repository;
+package com.project.dudu.repositories;
 
-import com.project.dudu.Entity.LostItemReportEntity;
+import com.project.dudu.entities.LostItemReportEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

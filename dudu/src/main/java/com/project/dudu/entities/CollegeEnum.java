@@ -1,4 +1,4 @@
-package com.project.dudu.Entity;
+package com.project.dudu.entities;
 
 public enum CollegeEnum {
     성산교양대학,

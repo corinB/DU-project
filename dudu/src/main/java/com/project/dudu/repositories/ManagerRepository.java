@@ -1,6 +1,6 @@
-package com.project.dudu.Repository;
+package com.project.dudu.repositories;
 
-import com.project.dudu.Entity.ManagerEntity;
+import com.project.dudu.entities.ManagerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

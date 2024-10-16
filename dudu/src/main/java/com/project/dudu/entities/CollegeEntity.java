@@ -1,4 +1,4 @@
-package com.project.dudu.Entity;
+package com.project.dudu.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

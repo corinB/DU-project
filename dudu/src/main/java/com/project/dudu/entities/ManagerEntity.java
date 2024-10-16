@@ -1,5 +1,6 @@
 package com.project.dudu.entities;
 
+import com.project.dudu.enums.Colleges;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -28,5 +29,5 @@ public class ManagerEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CollegeEnum college;  // 소속 대학 (ENUM)
+    private Colleges colleges;  // 소속 대학 (ENUM)
 }

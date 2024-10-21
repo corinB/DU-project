@@ -1,2 +1,4 @@
-package com.project.dudu.service;public class LostItemReportService {
+package com.project.dudu.service;
+
+public class LostItemReportService {
 }

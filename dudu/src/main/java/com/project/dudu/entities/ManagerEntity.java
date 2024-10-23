@@ -5,14 +5,17 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(value = DefaultListener.class)
 @Data
-@Table(name = "manager")
+@Table(name = "Manager_T")
 @Entity
-public class ManagerEntity {
+public class ManagerEntity implements IEntityAdapter<LocalDateTime> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +33,10 @@ public class ManagerEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Colleges department;  // 소속 대학 (ENUM)
+
+    @Column(name = "create_at")
+    private LocalDateTime createAt;
+    @Column(name = "update_at")
+    private LocalDateTime updateAt;
+
 }

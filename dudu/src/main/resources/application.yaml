@@ -1,19 +1,16 @@
 spring:
   application:
-  name: dudu
-<<<<<<< HEAD
+    name: dudu
   servlet:
     encoding:
       charset: UTF-8
       enabled: true
       force: true
 
-
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/du?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
     username: root
     password: qorwhdgus!!100
-
 
   jpa:
     hibernate:
@@ -23,6 +20,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-=======
-
->>>>>>> origin/gw

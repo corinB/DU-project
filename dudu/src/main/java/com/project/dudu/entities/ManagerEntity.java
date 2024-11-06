@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @EntityListeners(value = DefaultListener.class)
+@Data
 @Table(name = "Manager_T")
 @Entity
-public class ManagerEntity implements IEntityAdapter<LocalDateTime>{
+public class ManagerEntity implements IEntityAdapter<LocalDateTime> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +32,11 @@ public class ManagerEntity implements IEntityAdapter<LocalDateTime>{
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Colleges colleges;  // 소속 대학 (ENUM)
+    private Colleges department;  // 소속 대학 (ENUM)
 
     @Column(name = "create_at")
     private LocalDateTime createAt;
     @Column(name = "update_at")
     private LocalDateTime updateAt;
+
 }

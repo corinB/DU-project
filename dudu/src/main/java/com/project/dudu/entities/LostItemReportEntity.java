@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EntityListeners(value = DefaultListener.class)
 @Table(name = "Lost_item_report_T")
+@EntityListeners(value = DefaultListener.class)
 @Entity
 public class LostItemReportEntity implements IEntityAdapter<LocalDateTime>{
     @Id
@@ -38,4 +38,5 @@ public class LostItemReportEntity implements IEntityAdapter<LocalDateTime>{
     private LocalDateTime createAt;
     @Column(name = "update_at")
     private LocalDateTime updateAt;
+
 }

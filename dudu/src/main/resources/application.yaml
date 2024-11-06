@@ -1,7 +1,6 @@
 spring:
   application:
   name: dudu
-
   servlet:
     encoding:
       charset: UTF-8

@@ -4,6 +4,7 @@ import com.project.dudu.dto.ReservationDto;
 import com.project.dudu.entities.ReservationEntity;
 import com.project.dudu.enums.ReservationType;
 import com.project.dudu.repositories.CabinetRepository;
+import com.project.dudu.repositories.MessageRepository;
 import com.project.dudu.repositories.ReservationRepository;
 import com.project.dudu.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final StudentRepository studentRepository;
     private final CabinetRepository cabinetRepository;
+    private final MessageRepository messageRepository;
 
 
     /** 나중에 커스텀 익셉션으로 이미 빌린데 있음, 예약중인 사물함 이런거 넣읍시다
@@ -69,9 +71,6 @@ public class ReservationService {
         }
         return null;
     }
-
-
-
 
 
 }

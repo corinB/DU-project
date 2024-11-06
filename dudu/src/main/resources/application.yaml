@@ -1,6 +1,7 @@
 spring:
   application:
   name: dudu
+
   servlet:
     encoding:
       charset: UTF-8
@@ -22,5 +23,4 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
 

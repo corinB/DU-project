@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<<< HEAD:.idea/modules/dudu.main.iml
 <module external.linked.project.id="dudu:main" external.linked.project.path="$MODULE_DIR$/../../dudu" external.root.project.path="$MODULE_DIR$/../../dudu" external.system.id="GRADLE" external.system.module.group="com.project" external.system.module.type="sourceSet" external.system.module.version="0.0.1-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager">
     <output url="file://$MODULE_DIR$/../../dudu/build/classes/java/main" />
@@ -8,7 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../dudu/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../dudu/src/main/resources" type="java-resource" />
     </content>
-    <orderEntry type="jdk" jdkName="17" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.projectlombok:lombok:1.18.34" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-data-jpa:3.2.10" level="project" />
@@ -80,12 +79,5 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.angus:angus-activation:2.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:txw2:4.0.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.istack:istack-commons-runtime:4.1.2" level="project" />
-========
-<module version="4">
-  <component name="AdditionalModuleElements">
-    <content url="file://$MODULE_DIR$/../../dudu/build/generated/sources/annotationProcessor/java/main">
-      <sourceFolder url="file://$MODULE_DIR$/../../dudu/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
-    </content>
->>>>>>>> origin/baek:.idea/modules/dudu.dudu.main.iml
   </component>
 </module>

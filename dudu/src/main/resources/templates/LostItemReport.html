@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Lost Item Report List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Lost Item Reports</h1>
+
+    <div class="text-right mb-3">
+        <button onclick="location.href='/lost-items/create'" class="btn btn-primary">New Report</button>
+    </div>
+
+    <!-- 분실물 신고 목록 -->
+    <div id="reports">
+        <div th:each="report : ${reports}" class="report-item">
+            <a th:href="@{/lost-items/{id}(id=${report.id})}">
+                <h2 th:text="${report.itemName}">Item Name</h2>
+                <p>Description: <span th:text="${report.description}"></span></p>
+                <p>Date: <span th:text="${report.dateReported}"></span></p>
+            </a>
+            <form th:action="@{/lost-items/{id}/delete(id=${report.id})}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

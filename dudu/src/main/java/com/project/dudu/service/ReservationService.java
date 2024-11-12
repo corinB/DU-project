@@ -1,7 +1,9 @@
 package com.project.dudu.service;
 
 import com.project.dudu.dto.ReservationDto;
+import com.project.dudu.entities.MessageEntity;
 import com.project.dudu.entities.ReservationEntity;
+import com.project.dudu.enums.MessageType;
 import com.project.dudu.enums.ReservationType;
 import com.project.dudu.repositories.CabinetRepository;
 import com.project.dudu.repositories.MessageRepository;
@@ -23,6 +25,7 @@ public class ReservationService {
     private final CabinetRepository cabinetRepository;
     private final MessageRepository messageRepository;
 
+//----------------------------------------------------------------------------------------------------------------------
 
     /** 나중에 커스텀 익셉션으로 이미 빌린데 있음, 예약중인 사물함 이런거 넣읍시다
      * 예약 가능 검사 코드
@@ -47,7 +50,7 @@ public class ReservationService {
 
         return !(hasStudentReservation && hasCabinetReservation); // 조건이 하나라도 맞으면 false
     }
-
+//----------------------------------------------------------------------------------------------------------------------
 
     /**
      * 케비닛 예약 함수
@@ -56,21 +59,47 @@ public class ReservationService {
      **/
     @Transactional
     public ReservationDto reserve(ReservationDto dto){
-        if(canReservation(dto.getStudentId(), dto.getCabinetId(), dto.getReservationType())){
-           studentRepository.findById(dto.getStudentId()).ifPresent(studentEntity -> {
-               cabinetRepository.findById(dto.getCabinetId()).ifPresent(cabinetEntity -> {
-              var reservation = reservationRepository.save(ReservationEntity.builder()
-                       .student(studentEntity).cabinet(cabinetEntity)
-                       .reservationType(dto.getReservationType()).build());
+        if(canReservation(dto.getStudentId(), dto.getCabinetId(), dto.getReservationType())) {
+            var reservationEntity = reservationDtoToEntity(dto);
+            var messageEntity = makeSuccessMessage(reservationEntity);
+            messageRepository.save(messageEntity);
+            return ReservationEntityToDto(reservationRepository.save(reservationEntity));
+        }else return null;
+    }
+//----------------------------------------------------------------------------------------------------------------------
+    /**
+     * ReservationEntity -> ReservationDto
+     * @param entity ReservationEntity
+     *                  - 예약형태, 학번, 사물함 번호, 예약시간
+     * @return ReservationDto
+     **/
+    private ReservationDto ReservationEntityToDto(ReservationEntity entity){
+        return ReservationDto.builder()
+                .reservationType(entity.getReservationType().name())
+                .studentId(entity.getStudent().getStudentId())
+                .cabinetId(entity.getCabinet().getCabinetId()).build();
+    }
+//----------------------------------------------------------------------------------------------------------------------
 
-                   dto.setReservationStartTime(reservation.getCreateAt());
-                   dto.setReservationEndTime(reservation.getReservationTime());
-               });
-           });
-        return dto;
-        }
-        return null;
+  /**
+   * ReservationDto -> ReservationEntity
+   * @param dto ReservationDto
+   *                  - 예약형태, 학번, 사물함 번호, 예약시간
+   * @return ReservationEntity
+   **/
+    private ReservationEntity reservationDtoToEntity(ReservationDto dto){
+        return ReservationEntity.builder()
+                .reservationType(dto.getReservationType())
+                .cabinet(cabinetRepository.findById(dto.getCabinetId()).get())
+                .student(studentRepository.findById(dto.getStudentId()).get())
+                .build();
     }
 
+    private MessageEntity makeSuccessMessage(ReservationEntity entity){
+        return MessageEntity.builder()
+                .reservation(entity)
+                .messageType(MessageType.Success)
+                .build();
+    }
 
 }

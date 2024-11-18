@@ -17,7 +17,7 @@ public interface LostItemReportRepository extends JpaRepository<LostItemReportEn
     List<LostItemReportEntity> findByReporterName(String reporterName);
 
     // 특정 위치에서 발생한 신고를 모두 찾는 메서드
-    List<LostItemReportEntity> findByLocationContaining(String location);
+    List<LostItemReportEntity> findByLocation(String foundLocation);
 
     // 최근 N일 이내에 신고된 항목 조회
     List<LostItemReportEntity> findByReportDateAfter(LocalDateTime date);

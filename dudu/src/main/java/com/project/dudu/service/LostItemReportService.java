@@ -59,8 +59,8 @@ public class LostItemReportService {
     }
 
     // 위치로 신고 조회
-    public List<LostItemReportDto> searchByLocation(String location) {
-        return lostItemReportRepository.findByLocationContaining(location).stream()
+    public List<LostItemReportDto> searchByLocation(String foundLocation) {
+        return lostItemReportRepository.findByLocation(foundLocation).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -87,7 +87,7 @@ public class LostItemReportService {
                 entity.getItemName(),
                 entity.getCategory(),
                 entity.getFoundLocation(),
-                entity.getFoundPerson(),
+                entity.getReporterName(),
                 entity.getFoundTime()
         );
     }
@@ -98,8 +98,8 @@ public class LostItemReportService {
                 .reportId(dto.getId())
                 .itemName(dto.getTitle())
                 .category(dto.getDescription())
-                .foundLocation(dto.getLocation())
-                .foundPerson(dto.getReporterName())
+                .foundLocation(dto.getFoundLocation())
+                .reporterName(dto.getReporterName())
                 .foundTime(dto.getReportDate())
                 .build();
     }

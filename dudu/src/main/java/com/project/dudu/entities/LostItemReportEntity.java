@@ -34,7 +34,7 @@ public class LostItemReportEntity implements IEntityAdapter<LocalDateTime>{
     private String foundLocation;  // 습득 장소
 
     @Column(length = 100, nullable = true)
-    private String foundPerson;  //습득인
+    private String reporterName;  //습득인
 
     @Column(name = "create_at")
     private LocalDateTime createAt;

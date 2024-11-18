@@ -60,7 +60,7 @@ public class LostItemReportService {
 
     // 위치로 신고 조회
     public List<LostItemReportDto> searchByLocation(String foundLocation) {
-        return lostItemReportRepository.findByLocation(foundLocation).stream()
+        return lostItemReportRepository.findByFoundLocation(foundLocation).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -68,14 +68,7 @@ public class LostItemReportService {
     // 최근 신고 조회
     public List<LostItemReportDto> searchRecentReports(int days) {
         LocalDateTime date = LocalDateTime.now().minusDays(days);
-        return lostItemReportRepository.findByReportDateAfter(date).stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-    }
-
-    // 키워드로 제목 검색
-    public List<LostItemReportDto> searchByTitle(String keyword) {
-        return lostItemReportRepository.findByTitleContaining(keyword).stream()
+        return lostItemReportRepository.findByCreateAtAfter(date).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -96,7 +89,7 @@ public class LostItemReportService {
     private LostItemReportEntity convertToEntity(LostItemReportDto dto) {
         return LostItemReportEntity.builder()
                 .reportId(dto.getId())
-                .itemName(dto.getTitle())
+                .itemName(dto.getItemName())
                 .category(dto.getDescription())
                 .foundLocation(dto.getFoundLocation())
                 .reporterName(dto.getReporterName())

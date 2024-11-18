@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class LostItemReportDto {
     private Long id;
-    private String title;           // 분실물 제목
+    private String itemName;           // 분실물
     private String description;     // 분실물 설명
     private String foundLocation;        // 분실 장소
     private String reporterName;    // 신고자 이름

@@ -9,6 +9,10 @@ import java.util.List;
 
 @Repository
 public interface LostItemReportRepository extends JpaRepository<LostItemReportEntity, Long> {
+
+    // 수정된 메서드: itemName 을 기준으로 검색
+    List<LostItemReportEntity> findByItemNameContaining(String itemName);
+
     // 특정 이름의 신고를 모두 찾는 메서드
     List<LostItemReportEntity> findByReporterName(String reporterName);
 

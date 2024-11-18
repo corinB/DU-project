@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Slf4j
 @Builder
 @AllArgsConstructor

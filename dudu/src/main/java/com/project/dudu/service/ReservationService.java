@@ -1,9 +1,13 @@
 package com.project.dudu.service;
 
 import com.project.dudu.dto.ReservationDto;
+<<<<<<< HEAD
 import com.project.dudu.entities.MessageEntity;
 import com.project.dudu.entities.ReservationEntity;
 import com.project.dudu.enums.MessageType;
+=======
+import com.project.dudu.entities.ReservationEntity;
+>>>>>>> fadc1f5a91de7688eaef9e8f4643479c69a5c23f
 import com.project.dudu.enums.ReservationType;
 import com.project.dudu.repositories.CabinetRepository;
 import com.project.dudu.repositories.MessageRepository;
@@ -25,7 +29,10 @@ public class ReservationService {
     private final CabinetRepository cabinetRepository;
     private final MessageRepository messageRepository;
 
+<<<<<<< HEAD
 //----------------------------------------------------------------------------------------------------------------------
+=======
+>>>>>>> fadc1f5a91de7688eaef9e8f4643479c69a5c23f
 
     /** 나중에 커스텀 익셉션으로 이미 빌린데 있음, 예약중인 사물함 이런거 넣읍시다
      * 예약 가능 검사 코드
@@ -50,7 +57,11 @@ public class ReservationService {
 
         return !(hasStudentReservation && hasCabinetReservation); // 조건이 하나라도 맞으면 false
     }
+<<<<<<< HEAD
 //----------------------------------------------------------------------------------------------------------------------
+=======
+
+>>>>>>> fadc1f5a91de7688eaef9e8f4643479c69a5c23f
 
     /**
      * 케비닛 예약 함수
@@ -59,6 +70,7 @@ public class ReservationService {
      **/
     @Transactional
     public ReservationDto reserve(ReservationDto dto){
+<<<<<<< HEAD
         if(canReservation(dto.getStudentId(), dto.getCabinetId(), dto.getReservationType())) {
             var reservationEntity = reservationDtoToEntity(dto);
             var messageEntity = makeSuccessMessage(reservationEntity);
@@ -101,5 +113,23 @@ public class ReservationService {
                 .messageType(MessageType.Success)
                 .build();
     }
+=======
+        if(canReservation(dto.getStudentId(), dto.getCabinetId(), dto.getReservationType())){
+           studentRepository.findById(dto.getStudentId()).ifPresent(studentEntity -> {
+               cabinetRepository.findById(dto.getCabinetId()).ifPresent(cabinetEntity -> {
+              var reservation = reservationRepository.save(ReservationEntity.builder()
+                       .student(studentEntity).cabinet(cabinetEntity)
+                       .reservationType(dto.getReservationType()).build());
+
+                   dto.setReservationStartTime(reservation.getCreateAt());
+                   dto.setReservationEndTime(reservation.getReservationTime());
+               });
+           });
+        return dto;
+        }
+        return null;
+    }
+
+>>>>>>> fadc1f5a91de7688eaef9e8f4643479c69a5c23f
 
 }

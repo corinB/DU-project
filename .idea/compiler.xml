@@ -10,6 +10,10 @@
         <module name="dudu.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="dudu.dudu" target="17" />
+      <module name="dudu.dudu.main" target="17" />
+      <module name="dudu.dudu.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

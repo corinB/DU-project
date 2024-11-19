@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +20,9 @@ import java.util.List;
 public class StudentEntity implements IEntityAdapter<LocalDateTime>{
     @Id
     private long studentId;
+
     private String password;
+
     private String studentName;
 
     @Enumerated(EnumType.STRING)
@@ -27,6 +31,7 @@ public class StudentEntity implements IEntityAdapter<LocalDateTime>{
 
     @Column(name = "create_at")
     private LocalDateTime createAt;
+
     @Column(name = "update_at")
     private LocalDateTime updateAt;
 

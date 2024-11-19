@@ -22,6 +22,4 @@ public interface LostItemReportRepository extends JpaRepository<LostItemReportEn
     // 최근 N일 이내에 신고된 항목 조회
     List<LostItemReportEntity> findByCreateAtAfter(LocalDateTime date);
 
-    // 신고 제목으로 신고를 검색 (부분 일치)
-    List<LostItemReportEntity> findByTitleContaining(String keyword);
 }

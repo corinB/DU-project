@@ -18,4 +18,7 @@ public class LostItemReportDto {
     private String reporterName;     // 신고자 이름 (Optional)
     private LocalDateTime createAt;  // 생성 시간
     private LocalDateTime updateAt;  // 수정 시간
+
+    public LostItemReportDto(Long reportId, String itemName, String category, String foundLocation, String reporterName, LocalDateTime foundTime) {
+    }
 }

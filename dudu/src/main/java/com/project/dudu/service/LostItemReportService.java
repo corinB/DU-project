@@ -88,12 +88,14 @@ public class LostItemReportService {
     // DTO -> Entity 변환
     private LostItemReportEntity convertToEntity(LostItemReportDto dto) {
         return LostItemReportEntity.builder()
-                .reportId(dto.getId())
+                .reportId(dto.getReportId())
                 .itemName(dto.getItemName())
-                .category(dto.getDescription())
+                .category(dto.getCategory())
+                .foundTime(dto.getCreateAt())
                 .foundLocation(dto.getFoundLocation())
                 .reporterName(dto.getReporterName())
-                .foundTime(dto.getReportDate())
+                .createAt(LocalDateTime.now())
+                .updateAt(LocalDateTime.now())
                 .build();
     }
 }

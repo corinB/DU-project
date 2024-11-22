@@ -10,10 +10,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LostItemReportDto {
-    private Long id;
-    private String itemName;           // 분실물
-    private String description;     // 분실물 설명
-    private String foundLocation;        // 분실 장소
-    private String reporterName;    // 신고자 이름
-    private LocalDateTime reportDate; // 신고 날짜
+    private Long reportId;           // 분실물 신고 번호
+    private String itemName;         // 분실물 품목
+    private String category;         // 카테고리 (예: 전자기기, 의류 등)
+    private LocalDateTime foundTime; // 습득 시간
+    private String foundLocation;    // 습득 장소
+    private String reporterName;     // 신고자 이름 (Optional)
+    private LocalDateTime createAt;  // 생성 시간
+    private LocalDateTime updateAt;  // 수정 시간
 }

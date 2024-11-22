@@ -91,7 +91,7 @@ public class LostItemReportService {
                 .reportId(dto.getReportId())
                 .itemName(dto.getItemName())
                 .category(dto.getCategory())
-                .foundTime(dto.getCreateAt())
+                .foundTime(dto.getFoundTime())
                 .foundLocation(dto.getFoundLocation())
                 .reporterName(dto.getReporterName())
                 .createAt(LocalDateTime.now())

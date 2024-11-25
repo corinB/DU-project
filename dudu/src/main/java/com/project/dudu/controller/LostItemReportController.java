@@ -64,4 +64,11 @@ public class LostItemReportController {
         model.addAttribute("reports", lostItemReportService.searchByLocation(foundLocation));
         return "LostItemReport";  // 검색 결과를 목록 페이지에 표시
     }
+
+    // 카테고리로 신고 검색 (새로 추가된 메서드)
+    @GetMapping("/search/category")
+    public String searchByCategory(@RequestParam String category, Model model) {
+        model.addAttribute("reports", lostItemReportService.searchByCategory(category));
+        return "LostItemReport";  // 검색 결과를 목록 페이지에 표시
+    }
 }

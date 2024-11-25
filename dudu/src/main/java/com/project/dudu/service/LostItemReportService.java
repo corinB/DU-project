@@ -65,6 +65,13 @@ public class LostItemReportService {
                 .collect(Collectors.toList());
     }
 
+    // 카테고리로 신고 조회 (추가된 메서드)
+    public List<LostItemReportDto> searchByCategory(String category) {
+        return lostItemReportRepository.findByCategory(category).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     // 최근 신고 조회
     public List<LostItemReportDto> searchRecentReports(int days) {
         LocalDateTime date = LocalDateTime.now().minusDays(days);
@@ -97,5 +104,10 @@ public class LostItemReportService {
                 .createAt(LocalDateTime.now())
                 .updateAt(LocalDateTime.now())
                 .build();
+    }
+
+    // ID 존재 여부 확인 (추가된 메서드, 삭제 시 사용)
+    public boolean existsById(Long id) {
+        return lostItemReportRepository.existsById(id);
     }
 }

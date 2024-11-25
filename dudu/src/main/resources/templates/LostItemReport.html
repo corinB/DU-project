@@ -18,6 +18,10 @@
             font-size: 1.5rem;
             margin-bottom: 10px;
         }
+        /* 추가된 스타일 */
+        .search-form {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -28,6 +32,25 @@
         <button onclick="location.href='/lost-items/create'" class="btn btn-primary">New Report</button>
     </div>
 
+    <!-- 카테고리 검색 폼 추가 -->
+    <form th:action="@{/lost-items/search/category}" method="get" class="form-inline mb-3 search-form">
+        <select name="category" class="form-control mr-2">
+            <option value="" disabled selected>카테고리 선택</option>
+            <option value="전자기기">전자기기</option>
+            <option value="의류">의류</option>
+            <option value="액세서리">액세서리</option>
+            <option value="문서/서류">문서/서류</option>
+            <option value="지갑/파우치">지갑/파우치</option>
+            <option value="가방">가방</option>
+            <option value="귀금속/보석류">귀금속/보석류</option>
+            <option value="열쇠/키">열쇠/키</option>
+            <option value="안경/선글라스">안경/선글라스</option>
+            <option value="우산">우산</option>
+            <option value="기타">기타</option>
+        </select>
+        <button type="submit" class="btn btn-outline-primary">카테고리로 검색</button>
+    </form>
+
     <!-- 분실물 신고 목록 -->
     <div id="reports">
         <div th:each="report : ${reports}" class="report-item">
@@ -37,7 +60,8 @@
             </a>
             <p>Category: <span th:text="${report.category}">Category</span></p>
             <p>Location: <span th:text="${report.foundLocation}">Location</span></p>
-            <p>Date Found: <span th:text="${#temporals.format(report.foundTime, 'yyyy-MM-dd HH:mm:ss')}">Date Found</span></p>            <form th:action="@{/lost-items/{id}/delete(id=${report.reportId})}" method="post" style="display:inline;">
+            <p>Date Found: <span th:text="${#temporals.format(report.foundTime, 'yyyy-MM-dd HH:mm:ss')}">Date Found</span></p>
+            <form th:action="@{/lost-items/{id}/delete(id=${report.reportId})}" method="post" style="display:inline;">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </div>

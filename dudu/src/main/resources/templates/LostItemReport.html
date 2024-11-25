@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Lost Item Report List</title>
@@ -37,8 +37,7 @@
             </a>
             <p>Category: <span th:text="${report.category}">Category</span></p>
             <p>Location: <span th:text="${report.foundLocation}">Location</span></p>
-            <p>Date Found: <span th:text="${#dates.format(report.foundTime, 'yyyy-MM-dd HH:mm:ss')}">Date Found</span></p>
-            <form th:action="@{/lost-items/{id}/delete(id=${report.reportId})}" method="post" style="display:inline;">
+            <p>Date Found: <span th:text="${#temporals.format(report.foundTime, 'yyyy-MM-dd HH:mm:ss')}">Date Found</span></p>            <form th:action="@{/lost-items/{id}/delete(id=${report.reportId})}" method="post" style="display:inline;">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </div>

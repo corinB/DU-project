@@ -19,6 +19,13 @@ public class LostItemReportDto {
     private LocalDateTime createAt;  // 생성 시간
     private LocalDateTime updateAt;  // 수정 시간
 
+    // 매개변수가 있는 생성자 수정
     public LostItemReportDto(Long reportId, String itemName, String category, String foundLocation, String reporterName, LocalDateTime foundTime) {
+        this.reportId = reportId;
+        this.itemName = itemName;
+        this.category = category;
+        this.foundLocation = foundLocation;
+        this.reporterName = reporterName;
+        this.foundTime = foundTime;
     }
 }

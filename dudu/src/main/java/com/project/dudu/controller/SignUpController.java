@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+//학생 학번 입력되도록
 @Controller
 @RequestMapping("/signup")
 public class SignUpController {

@@ -26,8 +26,8 @@ public class MessageService {
      *              -종료 알람
      * @param rType 예약 형태
      **/
-    public void sendMessage(MessageType mType, ReservationType rType) {
-       reservationRepository.findReservationsBeforeTimeByType(LocalDateTime.now(), rType).forEach (reservationEntity ->{
+    private void sendMessage(LocalDateTime time,MessageType mType, ReservationType rType) {
+       reservationRepository.findReservationsAfterTimeByType(time, rType).forEach (reservationEntity ->{
            var massageEntity = MessageEntity.builder().reservation(reservationEntity).messageType(mType).build();
            messageRepository.save(massageEntity);
        });
@@ -35,4 +35,9 @@ public class MessageService {
     //-------------------------------------------------------------------------------------------------------------------
 
 
+
+
+    public void sendNotice(LocalDateTime time, ReservationType rType){
+        sendMessage(time, MessageType.Notice, rType);
+    }
 }

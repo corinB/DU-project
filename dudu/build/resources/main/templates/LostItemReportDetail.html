@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Lost Item Report Detail</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Lost Item Report Detail</h1>
+
+    <div class="report-detail">
+        <h2>Item Name: <span th:text="${report.itemName}">Item Name</span></h2>
+        <p>Description: <span th:text="${report.description}">Description</span></p>
+        <p>Date Reported: <span th:text="${report.dateReported}">Date</span></p>
+    </div>
+
+    <div class="text-right">
+        <button onclick="location.href='/lost-items'" class="btn btn-secondary">Back to List</button>
+    </div>
+</div>
+</body>
+</html>

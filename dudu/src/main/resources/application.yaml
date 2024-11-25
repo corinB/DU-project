@@ -9,19 +9,10 @@ spring:
 
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/dudu?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://127.0.0.1:3306/du?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
     username: root
-<<<<<<< HEAD
-<<<<<<< HEAD
     password: qorwhdgus!!100
-=======
-    password: 1234
->>>>>>> fadc1f5a91de7688eaef9e8f4643479c69a5c23f
-=======
-    password: aaaaaaaa
-#    password: qorwhdgus!!100
 
->>>>>>> 389b705d4720793db9eee4bfdc503176df292170
 
   jpa:
     hibernate:

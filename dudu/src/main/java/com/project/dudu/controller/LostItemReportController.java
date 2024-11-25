@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-//found location 들어가야함.
 @Controller
 @RequestMapping("/lost-items")
 public class LostItemReportController {
@@ -35,6 +34,10 @@ public class LostItemReportController {
     // 분실물 신고 생성 요청 처리
     @PostMapping("/create")
     public String createLostItemReport(@ModelAttribute LostItemReportDto lostItemReportDto) {
+        if (lostItemReportDto.getFoundLocation() == null || lostItemReportDto.getFoundLocation().isEmpty()) {
+            throw new IllegalArgumentException("Found location cannot be null or empty.");
+        }
+
         lostItemReportService.createReport(lostItemReportDto);
         return "redirect:/lost-items";
     }
@@ -42,7 +45,9 @@ public class LostItemReportController {
     // 특정 ID로 분실물 신고 조회 페이지 반환
     @GetMapping("/{id}")
     public String getLostItemReportById(@PathVariable Long id, Model model) {
-        model.addAttribute("report", lostItemReportService.getReportById(id).orElse(null));
+        LostItemReportDto report = lostItemReportService.getReportById(id).orElseThrow(() ->
+                new IllegalArgumentException("Report with ID " + id + " not found."));
+        model.addAttribute("report", report);
         return "LostItemReportDetail";  // LostItemReportDetail.html 파일을 반환
     }
 
@@ -51,5 +56,12 @@ public class LostItemReportController {
     public String deleteLostItemReport(@PathVariable Long id) {
         lostItemReportService.deleteReport(id);
         return "redirect:/lost-items";
+    }
+
+    // 위치로 신고 검색
+    @GetMapping("/search")
+    public String searchByLocation(@RequestParam String foundLocation, Model model) {
+        model.addAttribute("reports", lostItemReportService.searchByLocation(foundLocation));
+        return "LostItemReport";  // 검색 결과를 목록 페이지에 표시
     }
 }

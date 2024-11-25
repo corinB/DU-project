@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <title>Lost Item Report List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+        .report-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .report-item h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -16,12 +31,14 @@
     <!-- 분실물 신고 목록 -->
     <div id="reports">
         <div th:each="report : ${reports}" class="report-item">
-            <a th:href="@{/lost-items/{id}(id=${report.id})}">
+            <!-- 개별 신고 항목 -->
+            <a th:href="@{/lost-items/{id}(id=${report.reportId})}">
                 <h2 th:text="${report.itemName}">Item Name</h2>
-                <p>Description: <span th:text="${report.description}"></span></p>
-                <p>Date: <span th:text="${report.dateReported}"></span></p>
             </a>
-            <form th:action="@{/lost-items/{id}/delete(id=${report.id})}" method="post" style="display:inline;">
+            <p>Category: <span th:text="${report.category}">Category</span></p>
+            <p>Location: <span th:text="${report.foundLocation}">Location</span></p>
+            <p>Date Found: <span th:text="${#dates.format(report.foundTime, 'yyyy-MM-dd HH:mm:ss')}">Date Found</span></p>
+            <form th:action="@{/lost-items/{id}/delete(id=${report.reportId})}" method="post" style="display:inline;">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </div>

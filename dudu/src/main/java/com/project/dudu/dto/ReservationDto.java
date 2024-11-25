@@ -24,7 +24,7 @@ public class ReservationDto {
      * 예약 형태 반환
      * @return ReservationType
      **/
-    public ReservationType getReservationType() {
+    public ReservationType getReservationTypeEnum() {
         return ReservationType.getByType(this.reservationType);
     }
 }

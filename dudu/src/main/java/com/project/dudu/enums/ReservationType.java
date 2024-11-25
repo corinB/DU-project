@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ReservationType {
-    Day(1, "day"), Semester(120, "semester");
+    Day(1, "Day"), Semester(120, "Semester");
 
     private final int value;
 

@@ -39,17 +39,19 @@ public class ReservationService {
         var studentReservationList = reservationRepository.findByStudentId(studentId);
         var cabinetReservationList = reservationRepository.findByCabinetId(cabinetId);
 
-        // 학생 예약 중 조건에 맞는 예약이 있으면 True 반환
+        // 학생 예약 중 조건에 맞는 예약이 있으면 true 반환 (즉, 예약 불가)
         boolean hasStudentReservation = studentReservationList.stream()
                 .anyMatch(reservation -> reservation.getReservationType() == reservationType &&
                         reservation.getReservationTime().isAfter(LocalDateTime.now()));
 
-        // 사물함 예약 중 조건에 맞는 예약이 있으면 True 반환
+        // 사물함 예약 중 조건에 맞는 예약이 있으면 true 반환 (즉, 예약 불가)
         boolean hasCabinetReservation = cabinetReservationList.stream()
                 .anyMatch(reservation -> reservation.getReservationTime().isAfter(LocalDateTime.now()));
 
-        return !(hasStudentReservation && hasCabinetReservation); // 조건이 하나라도 맞으면 false
+        // 둘 중 하나라도 예약 중이라면 false 반환 (예약 불가)
+        return !(hasStudentReservation || hasCabinetReservation);
     }
+
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -61,7 +63,7 @@ public class ReservationService {
      **/
     @Transactional
     public ReservationDto reserve(ReservationDto dto){
-        if(canReservation(dto.getStudentId(), dto.getCabinetId(), dto.getReservationType())) {
+        if(canReservation(dto.getStudentId(), dto.getCabinetId(), dto.getReservationTypeEnum())) {
             var reservationEntity = reservationDtoToEntity(dto);
             var messageEntity = makeSuccessMessage(reservationEntity);
             messageRepository.save(messageEntity);
@@ -90,10 +92,11 @@ public class ReservationService {
    * @return ReservationEntity
    **/
     private ReservationEntity reservationDtoToEntity(ReservationDto dto){
+        ReservationType rType = ReservationType.getByType(dto.getReservationType());
         return ReservationEntity.builder()
-                .reservationType(dto.getReservationType())
                 .cabinet(cabinetRepository.findById(dto.getCabinetId()).get())
                 .student(studentRepository.findById(dto.getStudentId()).get())
+                .reservationType(rType)
                 .build();
     }
 

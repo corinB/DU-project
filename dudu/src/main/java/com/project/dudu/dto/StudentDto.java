@@ -2,16 +2,13 @@ package com.project.dudu.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.dudu.enums.Colleges;
-import com.project.dudu.enums.ReservationType;
 import lombok.*;
-import org.hibernate.annotations.Collate;
 
-@Setter
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-@Data
 public class StudentDto {
     @JsonProperty(value = "student_id")
     private Long studentId;
@@ -25,12 +22,15 @@ public class StudentDto {
     @JsonProperty(value = "department")
     private String department;
 
-    public StudentDto(long studentId, String studentName, String password) {
+    // 필드 값을 설정하는 생성자
+    public StudentDto(Long studentId, String studentName, String password) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.password = password;
     }
 
+    // department 문자열을 Colleges enum으로 변환하는 메서드
     public Colleges getCollege() {
         return Colleges.getByName(this.department);
     }
-
-
 }

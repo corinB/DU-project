@@ -14,10 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Data
-@EntityListeners(value = DefaultListener.class)
 @Table(name = "Student_T")
-public class StudentEntity implements IEntityAdapter<LocalDateTime>{
+@EntityListeners(value = DefaultListener.class)
+public class StudentEntity implements IEntityAdapter<LocalDateTime> {
     @Id
     private long studentId;
 
@@ -35,11 +34,9 @@ public class StudentEntity implements IEntityAdapter<LocalDateTime>{
     @Column(name = "update_at")
     private LocalDateTime updateAt;
 
-
-    //PK 설정
+    // 관계 설정
     @OneToMany(mappedBy = "student")
     @ToString.Exclude
     @Builder.Default
     private List<ReservationEntity> reservationList = new ArrayList<>();
-
 }

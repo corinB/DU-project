@@ -34,10 +34,30 @@ public class MessageService {
     }
     //-------------------------------------------------------------------------------------------------------------------
 
-
-
-
+  /**
+   * 예약알림 생성서비스 함수
+   *    - 예약 형태에따른 알림 생성
+   * @param time 예약시간
+   * @param rType 예약형태
+   *              - Day or Semester
+   **/
     public void sendNotice(LocalDateTime time, ReservationType rType){
         sendMessage(time, MessageType.Notice, rType);
     }
+
+    //------------------------------------------------------------------------------------------------------------
+    /**
+     * 종료 예약 알람 생성서비스
+     * @param nextDay 내일 이전 반납의 경우
+     *                - 예약일 알람
+     * @param rType 예약형태
+     *              - Day or Semester
+     **/
+    public void sendFinish(LocalDateTime nextDay, ReservationType rType){
+        sendMessage(nextDay, MessageType.Finish, rType);
+    }
+
+    //------------------------------------------------------------------------------------------------------------
+
+
 }

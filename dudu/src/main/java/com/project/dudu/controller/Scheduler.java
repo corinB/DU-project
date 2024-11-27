@@ -32,7 +32,7 @@ public class Scheduler {
      * 일일예약 종료 알림함수
      *   - 매일 19:00
      **/
-    @Scheduled(cron = "0 0 19 * *")
+    @Scheduled(cron = "0 0 19 * * *")
     @Transactional
     public void DayResFinishScheduler(){
         System.out.println("finishScheduler");

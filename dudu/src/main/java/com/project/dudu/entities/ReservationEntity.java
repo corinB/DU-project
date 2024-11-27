@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +52,18 @@ public class ReservationEntity implements IEntityAdapter<LocalDateTime>{
      **/
     @PrePersist
     private void setReservationTime() {
-        if (this.reservationType != null) {
-            this.reservationTime = LocalDateTime.now().plusDays(this.reservationType.getValue());
+        switch (this.reservationType) {
+            case Day -> this.reservationTime = LocalDateTime.now()
+                    .withHour(19)
+                    .withMinute(0)
+                    .withSecond(0)
+                    .withNano(0); // 당일 오후 7시로 설정
+
+            case Semester -> {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String date = this.reservationType.getDate();
+                this.reservationTime = LocalDateTime.parse(date, formatter);
+            }
         }
     }
 }

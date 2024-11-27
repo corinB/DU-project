@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.project.dudu.repositories.DayReservationRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-11-06T09:56:14" hostname="DESKTOP-V7M8M65" time="0.608">
+<testsuite name="com.project.dudu.repositories.DayReservationRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-11-27T10:16:49" hostname="DESKTOP-C55DRCC" time="1.419">
   <properties/>
-  <testcase name="recentlyReservation()" classname="com.project.dudu.repositories.DayReservationRepositoryTest" time="0.608"/>
-  <system-out><![CDATA[18:56:08.627 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.project.dudu.repositories.DayReservationRepositoryTest]: DayReservationRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-18:56:08.789 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.project.dudu.DuduApplication for test class com.project.dudu.repositories.DayReservationRepositoryTest
+  <testcase name="addReservation()" classname="com.project.dudu.repositories.DayReservationRepositoryTest" time="1.419"/>
+  <system-out><![CDATA[19:16:39.002 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.project.dudu.repositories.DayReservationRepositoryTest]: DayReservationRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:16:39.235 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.project.dudu.DuduApplication for test class com.project.dudu.repositories.DayReservationRepositoryTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -13,41 +13,63 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::               (v3.2.10)
 
-2024-11-06T18:56:09.281+09:00  INFO 14560 --- [dudu] [    Test worker] c.p.d.r.DayReservationRepositoryTest     : Starting DayReservationRepositoryTest using Java 17.0.8 with PID 14560 (started by jonghyun in C:\javaP\dup\dudu)
-2024-11-06T18:56:09.284+09:00  INFO 14560 --- [dudu] [    Test worker] c.p.d.r.DayReservationRepositoryTest     : No active profile set, falling back to 1 default profile: "default"
-2024-11-06T18:56:10.141+09:00  INFO 14560 --- [dudu] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-11-06T18:56:10.239+09:00  INFO 14560 --- [dudu] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 84 ms. Found 6 JPA repository interfaces.
-2024-11-06T18:56:10.919+09:00  INFO 14560 --- [dudu] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-11-06T18:56:11.023+09:00  INFO 14560 --- [dudu] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.10.Final
-2024-11-06T18:56:11.079+09:00  INFO 14560 --- [dudu] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-11-06T18:56:11.429+09:00  INFO 14560 --- [dudu] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-11-06T18:56:11.466+09:00  INFO 14560 --- [dudu] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-11-06T18:56:11.705+09:00  INFO 14560 --- [dudu] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@46a388cc
-2024-11-06T18:56:11.708+09:00  INFO 14560 --- [dudu] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-11-06T18:56:12.899+09:00  INFO 14560 --- [dudu] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-11-06T18:56:12.975+09:00  INFO 14560 --- [dudu] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-11-06T18:56:13.362+09:00  INFO 14560 --- [dudu] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-11-06T18:56:14.547+09:00  WARN 14560 --- [dudu] [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-2024-11-06T18:56:14.765+09:00  INFO 14560 --- [dudu] [    Test worker] c.p.d.r.DayReservationRepositoryTest     : Started DayReservationRepositoryTest in 5.792 seconds (process running for 7.158)
+2024-11-27T19:16:40.052+09:00  INFO 9644 --- [    Test worker] c.p.d.r.DayReservationRepositoryTest     : Starting DayReservationRepositoryTest using Java 17.0.11 with PID 9644 (started by qorwh in C:\Users\qorwh\OneDrive\바탕 화면\학교\24-2학기\도전학기\dudu\dudu)
+2024-11-27T19:16:40.055+09:00  INFO 9644 --- [    Test worker] c.p.d.r.DayReservationRepositoryTest     : No active profile set, falling back to 1 default profile: "default"
+2024-11-27T19:16:41.555+09:00  INFO 9644 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-27T19:16:41.701+09:00  INFO 9644 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 126 ms. Found 6 JPA repository interfaces.
+2024-11-27T19:16:42.210+09:00  INFO 9644 --- [    Test worker] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2024-11-27T19:16:42.213+09:00  INFO 9644 --- [    Test worker] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2024-11-27T19:16:42.217+09:00  INFO 9644 --- [    Test worker] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource test [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-11-27T19:16:42.218+09:00  INFO 9644 --- [    Test worker] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-11-27T19:16:42.218+09:00  INFO 9644 --- [    Test worker] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2024-11-27T19:16:42.219+09:00  INFO 9644 --- [    Test worker] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper
+2024-11-27T19:16:42.219+09:00  INFO 9644 --- [    Test worker] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2024-11-27T19:16:42.220+09:00  INFO 9644 --- [    Test worker] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2024-11-27T19:16:42.220+09:00  INFO 9644 --- [    Test worker] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2024-11-27T19:16:42.220+09:00  INFO 9644 --- [    Test worker] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application.yaml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-11-27T19:16:42.472+09:00  INFO 9644 --- [    Test worker] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2024-11-27T19:16:42.494+09:00  INFO 9644 --- [    Test worker] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2024-11-27T19:16:42.498+09:00  INFO 9644 --- [    Test worker] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2024-11-27T19:16:42.779+09:00  INFO 9644 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-27T19:16:42.965+09:00  INFO 9644 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.10.Final
+2024-11-27T19:16:43.063+09:00  INFO 9644 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-27T19:16:43.711+09:00  INFO 9644 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-27T19:16:43.787+09:00  INFO 9644 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-27T19:16:44.173+09:00  INFO 9644 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2c2aab92
+2024-11-27T19:16:44.179+09:00  INFO 9644 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-27T19:16:46.151+09:00  INFO 9644 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-27T19:16:46.275+09:00  INFO 9644 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-27T19:16:46.983+09:00  INFO 9644 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-27T19:16:49.087+09:00  INFO 9644 --- [    Test worker] c.p.d.r.DayReservationRepositoryTest     : Started DayReservationRepositoryTest in 9.591 seconds (process running for 12.03)
 Hibernate: 
     select
-        re1_0.reservation_id,
-        re1_0.cabinet_id,
-        re1_0.create_at,
-        re1_0.reservation_time,
-        re1_0.reservation_type,
-        re1_0.student_id,
-        re1_0.update_at 
+        ce1_0.cabinet_id,
+        ce1_0.create_at,
+        ce1_0.cabinet_department,
+        ce1_0.update_at 
     from
-        reservation_t re1_0 
+        cabinet_t ce1_0 
     where
-        re1_0.student_id=? 
-        and re1_0.reservation_type=? 
-    order by
-        re1_0.reservation_time desc 
-    limit
-        ?
-null
+        ce1_0.cabinet_id=?
+Hibernate: 
+    select
+        se1_0.student_id,
+        se1_0.create_at,
+        se1_0.department,
+        se1_0.password,
+        se1_0.student_name,
+        se1_0.update_at 
+    from
+        student_t se1_0 
+    where
+        se1_0.student_id=?
+Hibernate: 
+    insert 
+    into
+        reservation_t
+        (cabinet_id, create_at, reservation_time, reservation_type, student_id, update_at) 
+    values
+        (?, ?, ?, ?, ?, ?)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

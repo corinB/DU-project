@@ -184,3 +184,8 @@ Temporary Items
 *.icloud
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
+
+
+
+# Exclude application.yaml
+dudu/src/main/resources/application.yaml

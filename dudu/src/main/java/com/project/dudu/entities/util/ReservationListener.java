@@ -1,5 +1,6 @@
-package com.project.dudu.entities;
+package com.project.dudu.entities.util;
 
+import com.project.dudu.entities.ReservationEntity;
 import jakarta.persistence.PrePersist;
 
 import org.springframework.stereotype.Component;

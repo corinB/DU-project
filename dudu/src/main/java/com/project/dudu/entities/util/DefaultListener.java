@@ -1,5 +1,6 @@
-package com.project.dudu.entities;
+package com.project.dudu.entities.util;
 
+import com.project.dudu.entities.util.IEntityAdapter;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 

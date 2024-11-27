@@ -3,6 +3,7 @@ package com.project.dudu.entities;
 import com.project.dudu.enums.ReservationType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,11 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Configurable
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(value = DefaultListener.class)
+@EntityListeners(value = {DefaultListener.class, ReservationListener.class})
 @Table(name = "Reservation_T")
 public class ReservationEntity implements IEntityAdapter<LocalDateTime>{
     @Id
@@ -46,24 +48,4 @@ public class ReservationEntity implements IEntityAdapter<LocalDateTime>{
     @Builder.Default
     private List<MessageEntity> messageList = new ArrayList<>();
 
-
-    /**
-     * 자동으로 예약종료일 설정
-     **/
-    @PrePersist
-    private void setReservationTime() {
-        switch (this.reservationType) {
-            case Day -> this.reservationTime = LocalDateTime.now()
-                    .withHour(19)
-                    .withMinute(0)
-                    .withSecond(0)
-                    .withNano(0); // 당일 오후 7시로 설정
-
-            case Semester -> {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                String date = this.reservationType.getDate();
-                this.reservationTime = LocalDateTime.parse(date, formatter);
-            }
-        }
-    }
 }

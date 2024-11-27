@@ -17,6 +17,7 @@ import java.util.List;
 @Table(name = "Cabinet_T")
 public class CabinetEntity implements IEntityAdapter<LocalDateTime> {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cabinetId;
 
     @Enumerated(EnumType.STRING)

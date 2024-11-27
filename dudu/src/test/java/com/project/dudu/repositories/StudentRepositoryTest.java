@@ -56,4 +56,25 @@ class StudentRepositoryTest {
             }
         );
     }
+
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    void save110Student() {
+        Colleges [] colleges = Colleges.values();
+        String [] studentsName = {"student1", "student2", "student3",
+                "student4", "student5", "student6",
+                "student7", "student8", "student9", "student10"};
+
+        for (Colleges college : colleges) {
+            for (String studentName : studentsName) {
+                var student = StudentEntity.builder().studentName(college.getName() +" " + studentName)
+                        .department(college)
+                        .password("0000").build();
+
+                studentRepository.save(student);
+            }
+        }
+
+    }
 }

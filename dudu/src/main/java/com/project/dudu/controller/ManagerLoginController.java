@@ -2,6 +2,7 @@ package com.project.dudu.controller;
 
 import com.project.dudu.dto.ManagerDto;
 import com.project.dudu.service.ManagerLoginService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,13 +27,13 @@ public class ManagerLoginController {
         return "ManagerLogin"; // ManagerLogin.html 반환
     }
 
-    // 로그인 처리
+    // 로그인 처리 (수정된 메서드)
     @PostMapping
-    public String login(@ModelAttribute("managerDto") ManagerDto managerDto, Model model) {
-        boolean isAuthenticated = managerLoginService.authenticate(managerDto.getEmail(), managerDto.getPassword());
-        if (isAuthenticated) {
-            // 로그인 성공 시 세션에 관리자 정보 저장 등 필요한 작업 수행
-            model.addAttribute("managerName", managerDto.getName());
+    public String login(@ModelAttribute("managerDto") ManagerDto managerDto, Model model, HttpSession session) {
+        ManagerDto authenticatedManager = managerLoginService.authenticate(managerDto.getEmail(), managerDto.getPassword());
+        if (authenticatedManager != null) {
+            // 로그인 성공 시 세션에 관리자 정보 저장
+            session.setAttribute("manager", authenticatedManager);
             return "redirect:/manager/dashboard"; // 관리자 대시보드로 리다이렉트
         } else {
             // 로그인 실패 시 에러 메시지 표시

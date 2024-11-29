@@ -41,4 +41,10 @@ public class ManagerLoginController {
             return "ManagerLogin"; // 로그인 페이지로 다시 이동
         }
     }
+
+    @GetMapping("/manager/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화
+        return "redirect:/manager/login";
+    }
 }

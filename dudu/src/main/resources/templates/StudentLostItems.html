@@ -24,9 +24,10 @@
         <tbody>
         <tr th:each="item : ${lostItems}">
             <td th:text="${item.reportId}"></td>
-            <td th:text="${item.name}"></td>
-            <td th:text="${item.foundDate}"></td>
-            <td th:text="${item.location}"></td>
+            <td th:text="${item.itemName}"></td>
+            <td th:text="${item.foundTime}"></td>
+            <td th:text="${item.foundLocation}"></td>
+            <td th:text="${item.category}"></td>
             <!-- 기타 필요한 데이터 -->
         </tr>
         </tbody>

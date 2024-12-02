@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/lost-items")
+@RequestMapping("/manager/lost-items")
 public class LostItemReportController {
 
     private final LostItemReportService lostItemReportService;

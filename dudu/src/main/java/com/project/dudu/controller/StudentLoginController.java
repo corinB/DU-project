@@ -34,7 +34,7 @@ public class StudentLoginController {
         if (authenticatedStudent != null) {
             // 로그인 성공 시 세션에 학생 정보 저장
             session.setAttribute("student", authenticatedStudent);
-            return "redirect:/student/dashboard"; // 학생 대시보드로 리다이렉트
+            return "redirect:/student/main"; // 학생 대시보드로 리다이렉트
         } else {
             // 로그인 실패 시 에러 메시지 표시
             model.addAttribute("errorMessage", "학번 또는 비밀번호가 올바르지 않습니다.");

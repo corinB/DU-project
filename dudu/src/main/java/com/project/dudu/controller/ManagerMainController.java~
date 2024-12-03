@@ -6,6 +6,7 @@ import com.project.dudu.service.LostItemReportService;
 import com.project.dudu.service.ManageSignUpService;
 import com.project.dudu.service.ManagerLoginService;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 // 관리자 메인 컨트롤러
 @Controller
-@RequiredArgsConstructor
+@AllArgsConstructor
 @RequestMapping("/manager")
 public class ManagerMainController {
 

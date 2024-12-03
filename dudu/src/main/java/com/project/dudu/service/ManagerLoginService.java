@@ -3,18 +3,16 @@ package com.project.dudu.service;
 import com.project.dudu.dto.ManagerDto;
 import com.project.dudu.entities.ManagerEntity;
 import com.project.dudu.repositories.ManagerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ManagerLoginService {
 
     private final ManagerRepository managerRepository;
 
-    @Autowired
-    public ManagerLoginService(ManagerRepository managerRepository) {
-        this.managerRepository = managerRepository;
-    }
 
     // 인증 로직
     public ManagerDto authenticate(String email, String password) {

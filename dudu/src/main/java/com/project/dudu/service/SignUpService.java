@@ -4,6 +4,7 @@ import com.project.dudu.dto.StudentDto;
 import com.project.dudu.entities.StudentEntity;
 import com.project.dudu.enums.Colleges;
 import com.project.dudu.repositories.StudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,14 +13,11 @@ import java.time.LocalDateTime;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class SignUpService {
 
     private final StudentRepository studentRepository;
 
-    @Autowired
-    public SignUpService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
 
     // 회원가입 처리 메서드
     public StudentDto registerStudent(StudentDto studentDto) {

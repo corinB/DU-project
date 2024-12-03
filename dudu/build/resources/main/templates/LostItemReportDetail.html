@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lost Item Report Detail</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+        .report-detail {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .report-detail h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .report-detail p {
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Lost Item Report Detail</h1>
+
+    <div class="report-detail">
+        <h2 th:text="${report.itemName}">Item Name</h2>
+        <p>Category: <span th:text="${report.category}">Category</span></p>
+        <p>Location Found: <span th:text="${report.foundLocation}">Location</span></p>
+        <p>Date Found: <span th:text="${#temporals.format(report.foundTime, 'yyyy-MM-dd HH:mm:ss')}">Date Found</span></p>
+        <p>Reporter Name: <span th:text="${report.reporterName}">Reporter Name</span></p>
+        <!-- 필요에 따라 추가 필드들을 여기에 포함하세요 -->
+    </div>
+
+    <div class="mt-3">
+        <button onclick="location.href='/lost-items'" class="btn btn-secondary">Back to List</button>
+    </div>
+</div>
+</body>
+</html>

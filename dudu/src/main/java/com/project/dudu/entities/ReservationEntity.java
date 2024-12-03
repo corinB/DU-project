@@ -1,21 +1,26 @@
 package com.project.dudu.entities;
 
+import com.project.dudu.entities.util.DefaultListener;
+import com.project.dudu.entities.util.IEntityAdapter;
+import com.project.dudu.entities.util.ReservationListener;
 import com.project.dudu.enums.ReservationType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Configurable
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(value = DefaultListener.class)
+@EntityListeners(value = {DefaultListener.class, ReservationListener.class})
 @Table(name = "Reservation_T")
-public class ReservationEntity implements IEntityAdapter<LocalDateTime>{
+public class ReservationEntity implements IEntityAdapter<LocalDateTime> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reservationId;
@@ -45,14 +50,4 @@ public class ReservationEntity implements IEntityAdapter<LocalDateTime>{
     @Builder.Default
     private List<MessageEntity> messageList = new ArrayList<>();
 
-
-    /**
-     * 자동으로 예약종료일 설정
-     **/
-    @PrePersist
-    private void setReservationTime() {
-        if (this.reservationType != null) {
-            this.reservationTime = LocalDateTime.now().plusDays(this.reservationType.getValue());
-        }
-    }
 }

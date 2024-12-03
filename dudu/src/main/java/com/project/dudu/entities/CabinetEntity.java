@@ -1,5 +1,7 @@
 package com.project.dudu.entities;
 
+import com.project.dudu.entities.util.DefaultListener;
+import com.project.dudu.entities.util.IEntityAdapter;
 import com.project.dudu.enums.Colleges;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,6 +19,7 @@ import java.util.List;
 @Table(name = "Cabinet_T")
 public class CabinetEntity implements IEntityAdapter<LocalDateTime> {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cabinetId;
 
     @Enumerated(EnumType.STRING)

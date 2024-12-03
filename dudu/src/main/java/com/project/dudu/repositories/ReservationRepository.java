@@ -36,8 +36,8 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 
-    String findByReservationAndTypeBeforeTime = "select r from ReservationEntity r "+
-            "where r.reservationTime < :time and r.reservationType = :type";
+    String findByReservationAndTypeAfterTime = "select r from ReservationEntity r "+
+            "where r.reservationTime > :time and r.reservationType = :type";
     /**
      * 주어진 시간 이전의 특정 타입의 미종료 예약 찾기
      * @param time 조회 기준 시간
@@ -45,8 +45,8 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
      * @return 예약 내역 리스트
      */
     @Transactional(readOnly = true)
-    @Query(value = findByReservationAndTypeBeforeTime)
-    List<ReservationEntity> findReservationsBeforeTimeByType(LocalDateTime time, ReservationType type);
+    @Query(value = findByReservationAndTypeAfterTime)
+    List<ReservationEntity> findReservationsAfterTimeByType(LocalDateTime time, ReservationType type);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 }

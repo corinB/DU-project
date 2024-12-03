@@ -19,16 +19,13 @@ class DayReservationRepositoryTest {
     @Transactional
     @Rollback(value = false)
     public void addReservation() {
-        cabinetRepository.findById(0L).ifPresent(cabinetEntity -> {
-            studentRepository.findById(0L).ifPresent(studentEntity -> {
-                var dayReservation = ReservationEntity.builder().cabinet(cabinetEntity).student(studentEntity).build();
-                reservationRepository.save(dayReservation);
-            });
-        });
-        cabinetRepository.findById(1L).ifPresent(cabinetEntity -> {
-            studentRepository.findById(1L).ifPresent(studentEntity -> {
-                var Reservation = ReservationEntity.builder().cabinet(cabinetEntity).student(studentEntity).build();
-                reservationRepository.save(Reservation);
+        cabinetRepository.findById(7L).ifPresent(cabinetEntity -> {
+            studentRepository.findById(5L).ifPresent(studentEntity -> {
+                var semesterReservation = ReservationEntity.builder()
+                        .cabinet(cabinetEntity)
+                        .student(studentEntity)
+                        .reservationType(ReservationType.Semester).build();
+                reservationRepository.save(semesterReservation);
             });
         });
     }

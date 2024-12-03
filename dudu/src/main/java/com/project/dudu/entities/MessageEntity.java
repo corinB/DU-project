@@ -1,5 +1,7 @@
 package com.project.dudu.entities;
 
+import com.project.dudu.entities.util.DefaultListener;
+import com.project.dudu.entities.util.IEntityAdapter;
 import com.project.dudu.enums.MessageType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
 @Entity
 @EntityListeners(value = DefaultListener.class)
 @Table(name = "message_T")
-public class MessageEntity implements IEntityAdapter<LocalDateTime>{
+public class MessageEntity implements IEntityAdapter<LocalDateTime> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long messageId;

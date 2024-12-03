@@ -25,4 +25,17 @@ class CabinetRepositoryTest {
         }
     }
 
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    public void save220Cabinet() {
+        Colleges [] colleges = Colleges.values();
+        for (Colleges college : colleges) {
+            for (long i = 0; i < 20; i++) {
+                var cabinet = CabinetEntity.builder().department(college).build();
+                cabinetRepository.save(cabinet);
+            }
+            }
+        }
+
 }

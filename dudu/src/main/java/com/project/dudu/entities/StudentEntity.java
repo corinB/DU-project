@@ -1,5 +1,7 @@
 package com.project.dudu.entities;
 
+import com.project.dudu.entities.util.DefaultListener;
+import com.project.dudu.entities.util.IEntityAdapter;
 import com.project.dudu.enums.Colleges;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +20,7 @@ import java.util.List;
 @EntityListeners(value = DefaultListener.class)
 public class StudentEntity implements IEntityAdapter<LocalDateTime> {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long studentId;
 
     private String password;

@@ -1,5 +1,7 @@
 package com.project.dudu.entities;
 
+import com.project.dudu.entities.util.DefaultListener;
+import com.project.dudu.entities.util.IEntityAdapter;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
 @Table(name = "Lost_item_report_T")
 @EntityListeners(value = DefaultListener.class)
 @Entity
-public class LostItemReportEntity implements IEntityAdapter<LocalDateTime>{
+public class LostItemReportEntity implements IEntityAdapter<LocalDateTime> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;  // 분실물 신고 번호

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 완료</title>
+</head>
+<body>
+<h1>예약 성공 페이지</h1>
+<p>학생 ID: <span th:text="${dto.studentId}">학생 ID 없음</span></p>
+<p>캐비닛 ID: <span th:text="${dto.cabinetId}">캐비닛 ID 없음</span></p>
+<p>예약 시작 시간: <span th:text="${dto.reservationStartTime}">시작 시간 없음</span></p>
+<p>예약 종료 시간: <span th:text="${dto.reservationEndTime}">종료 시간 없음</span></p>
+</body>
+</html>

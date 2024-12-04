@@ -5,6 +5,7 @@ import com.project.dudu.service.LostItemReportService;
 import com.project.dudu.service.SignUpService;
 import com.project.dudu.service.StudentLoginService;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 // 학생 메인 컨트롤러
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/student")
 public class StudentMainController {
 
@@ -19,14 +21,7 @@ public class StudentMainController {
     private final LostItemReportService lostItemReportService;
     private final SignUpService signUpService;
 
-    @Autowired
-    public StudentMainController(StudentLoginService studentLoginService,
-                                 LostItemReportService lostItemReportService,
-                                 SignUpService signUpService) {
-        this.studentLoginService = studentLoginService;
-        this.lostItemReportService = lostItemReportService;
-        this.signUpService = signUpService;
-    }
+
 
     // 회원가입 페이지 반환
     @GetMapping("/signup")
@@ -98,4 +93,7 @@ public class StudentMainController {
     }
 
     // 추가로 필요한 학생 기능들을 이곳에 작성하면 됩니다.
+//
+//    @PostMapping("/main/reserve")
+//    public String
 }

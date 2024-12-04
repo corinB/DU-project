@@ -4,6 +4,7 @@ import com.project.dudu.dto.ManagerDto;
 import com.project.dudu.entities.ManagerEntity;
 import com.project.dudu.enums.Colleges;
 import com.project.dudu.repositories.ManagerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,15 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class ManageSignUpService {
 
     private final ManagerRepository managerRepository;
 
-    @Autowired
-    public ManageSignUpService(ManagerRepository managerRepository) {
-        this.managerRepository = managerRepository;
-    }
 
     // 관리자 회원가입 처리 메서드
     public ManagerDto registerManager(ManagerDto managerDto) {

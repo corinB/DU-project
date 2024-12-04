@@ -26,7 +26,7 @@ public class StudentMainController {
     // 회원가입 페이지 반환
     @GetMapping("/signup")
     public String showSignUpForm(Model model) {
-        model.addAttribute("studentDto", new StudentDto());
+        model.addAttribute("studentDto", StudentDto.builder().build());
         return "SignUp"; // SignUp.html 반환
     }
 

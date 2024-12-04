@@ -41,7 +41,7 @@ public class StudentMainController {
     // 로그인 페이지 반환
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        model.addAttribute("studentDto", new StudentDto());
+        model.addAttribute("studentDto", StudentDto.builder().build());
         return "StudentLogin"; // StudentLogin.html 반환
     }
 

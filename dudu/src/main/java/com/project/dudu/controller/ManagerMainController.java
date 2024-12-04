@@ -45,7 +45,7 @@ public class ManagerMainController {
     // 관리자 회원가입 페이지 반환
     @GetMapping("/signup")
     public String showManagerSignUpForm(Model model) {
-        model.addAttribute("managerDto", new ManagerDto());
+        model.addAttribute("managerDto", ManagerDto.builder().build());
         return "ManagerSignUp"; // ManagerSignUp.html 반환
     }
 

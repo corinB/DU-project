@@ -3,6 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>대구대학교 사물함 예약 페이지</title>
+    <style>
+        /* 공통 버튼 스타일 */
+        .btn {
+            font-size: 18px;
+            padding: 10px 20px;
+            width: 200px;
+            height: 50px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        /* 로그인 버튼 스타일 (밝은 초록색) */
+        .btn-login {
+            background-color: #28a745; /* Bootstrap의 success 색상 */
+        }
+        /* 회원가입 버튼 스타일 (진한 녹색) */
+        .btn-signup {
+            background-color: #006400; /* 진한 녹색 */
+        }
+        /* 호버 효과 */
+        .btn-login:hover {
+            background-color: #218838;
+        }
+        .btn-signup:hover {
+            background-color: #005000;
+        }
+    </style>
 </head>
 <body>
 <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
@@ -23,19 +50,35 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <!-- 로그인 버튼들 -->
+                        <!-- 로그인 및 회원가입 버튼들 -->
                         <table border="0" cellspacing="10" cellpadding="0">
+                            <!-- 로그인 버튼들 -->
                             <tr>
                                 <td align="center">
                                     <!-- 학생 로그인 버튼 -->
                                     <form action="/student/login" method="get">
-                                        <input type="submit" value="학생 로그인" style="font-size: 18px; padding: 10px 20px;">
+                                        <input type="submit" value="학생 로그인" class="btn btn-login">
                                     </form>
                                 </td>
                                 <td align="center">
                                     <!-- 관리자 로그인 버튼 -->
                                     <form action="/manager/login" method="get">
-                                        <input type="submit" value="관리자 로그인" style="font-size: 18px; padding: 10px 20px;">
+                                        <input type="submit" value="관리자 로그인" class="btn btn-login">
+                                    </form>
+                                </td>
+                            </tr>
+                            <!-- 회원가입 버튼들 -->
+                            <tr>
+                                <td align="center">
+                                    <!-- 학생 회원가입 버튼 -->
+                                    <form action="/student/signup" method="get">
+                                        <input type="submit" value="학생 회원가입" class="btn btn-signup">
+                                    </form>
+                                </td>
+                                <td align="center">
+                                    <!-- 관리자 회원가입 버튼 -->
+                                    <form action="/manager/signup" method="get">
+                                        <input type="submit" value="관리자 회원가입" class="btn btn-signup">
                                     </form>
                                 </td>
                             </tr>

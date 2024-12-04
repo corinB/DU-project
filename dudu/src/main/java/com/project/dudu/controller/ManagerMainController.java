@@ -42,20 +42,20 @@ public class ManagerMainController {
         return "redirect:/manager/login";
     }
 
-    // 관리자 회원가입 페이지 반환
-    @GetMapping("/signup")
-    public String showManagerSignUpForm(Model model) {
-        model.addAttribute("managerDto", ManagerDto.builder().build());
-        return "ManagerSignUp"; // ManagerSignUp.html 반환
-    }
-
-    // 관리자 회원가입 요청 처리
-    @PostMapping("/signup")
-    public String registerManager(@ModelAttribute("managerDto") ManagerDto managerDto, Model model) {
-        manageSignUpService.registerManager(managerDto);
-        model.addAttribute("message", "관리자 회원가입이 성공적으로 완료되었습니다.");
-        return "ManagerSignUpSuccess"; // 성공 메시지 페이지로 이동
-    }
+//    // 관리자 회원가입 페이지 반환
+//    @GetMapping("/signup")
+//    public String showManagerSignUpForm(Model model) {
+//        model.addAttribute("managerDto", ManagerDto.builder().build());
+//        return "ManagerSignUp"; // ManagerSignUp.html 반환
+//    }
+//
+//    // 관리자 회원가입 요청 처리
+//    @PostMapping("/signup")
+//    public String registerManager(@ModelAttribute("managerDto") ManagerDto managerDto, Model model) {
+//        manageSignUpService.registerManager(managerDto);
+//        model.addAttribute("message", "관리자 회원가입이 성공적으로 완료되었습니다.");
+//        return "ManagerSignUpSuccess"; // 성공 메시지 페이지로 이동
+//    }
 
     // 관리자 로그인 페이지 반환
     @GetMapping("/login")

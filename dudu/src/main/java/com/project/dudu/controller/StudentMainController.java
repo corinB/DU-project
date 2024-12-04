@@ -22,6 +22,7 @@ public class StudentMainController {
     private final SignUpService signUpService;
 
 
+
     // 회원가입 페이지 반환
     @GetMapping("/signup")
     public String showSignUpForm(Model model) {
@@ -92,4 +93,7 @@ public class StudentMainController {
     }
 
     // 추가로 필요한 학생 기능들을 이곳에 작성하면 됩니다.
+//
+//    @PostMapping("/main/reserve")
+//    public String
 }

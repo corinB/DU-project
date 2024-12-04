@@ -18,7 +18,6 @@ public class SignUpService {
 
     private final StudentRepository studentRepository;
 
-
     // 회원가입 처리 메서드
     public StudentDto registerStudent(StudentDto studentDto) {
         // 입력값 검증

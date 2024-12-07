@@ -137,20 +137,6 @@ public class ManagerMainController {
         model.addAttribute("reports", lostItemReportService.searchByCategory(category));
         return "LostItemReport";
     }
-
-    // 관리자 회원가입 (필요 시) - 여기서는 기본 코드를 유지
-    @GetMapping("/signup")
-    public String showManagerSignUpForm(Model model) {
-        model.addAttribute("managerDto", ManagerDto.builder().build());
-        return "ManagerSignUp"; // ManagerSignUp.html
-    }
-
-    @PostMapping("/signup")
-    public String registerManager(@ModelAttribute("managerDto") ManagerDto managerDto, Model model) {
-        manageSignUpService.registerManager(managerDto);
-        model.addAttribute("message", "관리자 회원가입이 성공적으로 완료되었습니다.");
-        return "ManagerSignUpSuccess"; // ManagerSignUpSuccess.html
-    }
 }
 
 

@@ -69,7 +69,7 @@ public class ManagerMainController {
     }
 
     // 분실물 신고 생성 페이지 반환
-    @GetMapping("manager/lost-items/create")
+    @GetMapping("/lost-items/create")
     public String showCreateForm(HttpSession session) {
         if (session.getAttribute("manager") == null) {
             return "redirect:/manager/login";

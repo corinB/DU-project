@@ -29,11 +29,11 @@
     <h1>Lost Item Reports</h1>
 
     <div class="text-right mb-3">
-        <button onclick="location.href='/lost-items/create'" class="btn btn-primary">New Report</button>
+        <button onclick="location.href='/manager/lost-items/create'" class="btn btn-primary">New Report</button>
     </div>
 
     <!-- 카테고리 검색 폼 추가 -->
-    <form th:action="@{/lost-items/search/category}" method="get" class="form-inline mb-3 search-form">
+    <form th:action="@{/manager/lost-items/search/category}" method="get" class="form-inline mb-3 search-form">
         <select name="category" class="form-control mr-2">
             <option value="" disabled selected>카테고리 선택</option>
             <option value="전자기기">전자기기</option>
@@ -55,13 +55,13 @@
     <div id="reports">
         <div th:each="report : ${reports}" class="report-item">
             <!-- 개별 신고 항목 -->
-            <a th:href="@{/lost-items/{id}(id=${report.reportId})}">
+            <a th:href="@{/manager/lost-items/{id}(id=${report.reportId})}">
                 <h2 th:text="${report.itemName}">Item Name</h2>
             </a>
             <p>Category: <span th:text="${report.category}">Category</span></p>
             <p>Location: <span th:text="${report.foundLocation}">Location</span></p>
             <p>Date Found: <span th:text="${#temporals.format(report.foundTime, 'yyyy-MM-dd HH:mm:ss')}">Date Found</span></p>
-            <form th:action="@{/lost-items/{id}/delete(id=${report.reportId})}" method="post" style="display:inline;">
+            <form th:action="@{/manager/lost-items/{id}/delete(id=${report.reportId})}" method="post" style="display:inline;">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </div>

@@ -3,67 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>학생 메인 페이지</title>
-    <!-- Apple 스타일을 위해 San Francisco 폰트 사용 -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap">
-    <!-- Bootstrap CSS 사용 -->
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- 커스텀 스타일 시트 -->
     <style>
-        body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-            Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
-        }
+        /* 컨테이너 상단 여백 */
         .main-container {
-            margin-top: 80px;
+            margin-top: 50px;
         }
-        .welcome-message {
-            font-size: 2.5rem;
-            font-weight: 600;
-        }
+
+        /* 버튼 공통 스타일 */
         .btn-custom {
-            margin: 20px;
-            width: 250px;
-            height: 60px;
-            font-size: 1.1rem;
-            border-radius: 12px;
-            font-weight: 500;
-        }
-        .btn-primary {
-            background-color: #0071e3;
-            border: none;
-        }
-        .btn-primary:hover {
-            background-color: #005bb5;
-        }
-        .btn-secondary {
-            background-color: #34c759;
-            border: none;
-        }
-        .btn-secondary:hover {
-            background-color: #30b050;
-        }
-        .btn-info {
-            background-color: #af52de;
-            border: none;
-        }
-        .btn-info:hover {
-            background-color: #9946c3;
-        }
-        .btn-danger {
-            background-color: #ff3b30;
-            border: none;
-        }
-        .btn-danger:hover {
-            background-color: #e3332a;
+            margin: 10px;
+            width: 200px;
         }
     </style>
 </head>
 <body>
 <div class="container text-center main-container">
-    <h1 class="welcome-message">안녕하세요, <span th:text="${studentName}">학생</span>님!</h1>
-    <div class="mt-5">
+    <h1>안녕하세요, <span th:text="${studentName}">학생</span>님!</h1>
+    <div class="mt-4">
+        <!-- 관리자 메인 페이지 코드와 유사한 버튼 스타일 적용 -->
         <a href="/student/lost-items" class="btn btn-primary btn-custom">분실물 신고 목록</a>
         <a href="/reservation" class="btn btn-secondary btn-custom">사물함 예약</a>
         <a href="/student/profile" class="btn btn-info btn-custom">회원정보 조회</a>

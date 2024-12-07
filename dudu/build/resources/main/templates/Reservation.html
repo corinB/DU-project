@@ -3,24 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>예약 페이지</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .reservation-container {
+            max-width: 500px;
+            margin: 50px auto;
+        }
+        .card-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+        }
+        /* 필요하다면 추가 커스텀 스타일 추가 가능 */
+    </style>
 </head>
 <body>
-<h1>예약 페이지</h1>
-<form action="/reservation/try" method="post" th:object="${reservationDto}">
-    <label for="studentId">학생 ID:</label>
-    <input type="number" id="studentId" name="studentId" placeholder="studentId" required>
-    <br><br>
-    <label for="cabinetId">캐비닛 ID:</label>
-    <input type="number" id="cabinetId" name="cabinetId" placeholder="cabinetId" required>
-    <br><br>
-    <label for="reservationType">예약 형태:</label>
-    <select id="reservationType" name="reservationType" required>
-        <option value="" disabled selected>예약 유형 선택</option>
-        <option value="Semester">Semester</option>
-        <option value="Day">Day</option>
-    </select>
-    <br><br>
-    <button type="submit">예약하기</button>
-</form>
+<div class="container reservation-container">
+    <div class="card">
+        <div class="card-header text-center">
+            예약 페이지
+        </div>
+        <div class="card-body">
+            <form action="/reservation/try" method="post" th:object="${reservationDto}">
+                <div class="form-group">
+                    <label for="studentId">학생 ID</label>
+                    <input type="number" class="form-control" id="studentId" name="studentId" placeholder="학생 ID를 입력하세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="cabinetId">캐비닛 ID</label>
+                    <input type="number" class="form-control" id="cabinetId" name="cabinetId" placeholder="캐비닛 ID를 입력하세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="reservationType">예약 형태</label>
+                    <select class="form-control" id="reservationType" name="reservationType" required>
+                        <option value="" disabled selected>예약 유형 선택</option>
+                        <option value="Semester">Semester</option>
+                        <option value="Day">Day</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-submit">예약하기</button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

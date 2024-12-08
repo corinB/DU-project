@@ -1,6 +1,7 @@
 package com.project.dudu.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.dudu.entities.StudentEntity;
 import com.project.dudu.enums.Colleges;
 import lombok.*;
 
@@ -33,4 +34,7 @@ public class StudentDto {
     public Colleges getCollege() {
         return Colleges.getByName(this.department);
     }
+
+    public StudentEntity toEntity() { return StudentEntity.builder().studentId(this.studentId).studentName(this.studentName).password(this.password).department(this.getCollege()).build(); }
+
 }

@@ -160,4 +160,5 @@ public class ManagerMainController {
     }
 
     // 추가로 필요한 관리자 기능들을 이곳에 작성하면 됩니다.
+
 }

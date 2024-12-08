@@ -1,5 +1,6 @@
 package com.project.dudu.entities;
 
+import com.project.dudu.dto.ReservationDto;
 import com.project.dudu.entities.util.DefaultListener;
 import com.project.dudu.entities.util.IEntityAdapter;
 import com.project.dudu.entities.util.ReservationListener;
@@ -49,5 +50,15 @@ public class ReservationEntity implements IEntityAdapter<LocalDateTime> {
     @ToString.Exclude
     @Builder.Default
     private List<MessageEntity> messageList = new ArrayList<>();
+
+    public ReservationDto toDto() {
+        return ReservationDto.builder()
+                .reservationType(reservationType.name())
+                .studentId(student.getStudentId())
+                .cabinetId(cabinet.getCabinetId())
+                .reservationStartTime(createAt)
+                .reservationEndTime(reservationTime)
+                .build();
+    }
 
 }

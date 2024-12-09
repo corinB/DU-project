@@ -34,7 +34,7 @@ public class FirstPageController {
     public String registerStudent(@ModelAttribute("studentDto") StudentDto studentDto, Model model) {
         signUpService.registerStudent(studentDto);
         model.addAttribute("message", "학생 회원가입이 성공적으로 완료되었습니다.");
-        return "SignUpSuccess"; // 성공 메시지 페이지로 이동
+        return "StudentSignUpSuccess"; // 성공 메시지 페이지로 이동
     }
 
     // 관리자 회원가입 페이지 반환

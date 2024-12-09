@@ -30,7 +30,7 @@ public class StudentService {
         // department 문자열을 Colleges enum으로 변환
         Colleges departmentEnum;
         try {
-            departmentEnum = Colleges.valueOf(studentDto.getDepartment());
+            departmentEnum = Colleges.getByName(studentDto.getDepartment());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("유효하지 않은 학과입니다.");
         }

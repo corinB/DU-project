@@ -6,6 +6,7 @@ import com.project.dudu.service.LostItemReportService;
 import com.project.dudu.service.ManageSignUpService;
 import com.project.dudu.service.ManagerLoginService;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 // 관리자 메인 컨트롤러
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/manager")
 public class ManagerMainController {
 
@@ -20,14 +22,6 @@ public class ManagerMainController {
     private final ManageSignUpService manageSignUpService;
     private final LostItemReportService lostItemReportService;
 
-    @Autowired
-    public ManagerMainController(ManagerLoginService managerLoginService,
-                                 ManageSignUpService manageSignUpService,
-                                 LostItemReportService lostItemReportService) {
-        this.managerLoginService = managerLoginService;
-        this.manageSignUpService = manageSignUpService;
-        this.lostItemReportService = lostItemReportService;
-    }
 
     // 관리자 메인 페이지 반환
     @GetMapping("/main")
@@ -48,20 +42,6 @@ public class ManagerMainController {
         return "redirect:/manager/login";
     }
 
-    // 관리자 회원가입 페이지 반환
-    @GetMapping("/signup")
-    public String showManagerSignUpForm(Model model) {
-        model.addAttribute("managerDto", new ManagerDto());
-        return "ManagerSignUp"; // ManagerSignUp.html 반환
-    }
-
-    // 관리자 회원가입 요청 처리
-    @PostMapping("/signup")
-    public String registerManager(@ModelAttribute("managerDto") ManagerDto managerDto, Model model) {
-        manageSignUpService.registerManager(managerDto);
-        model.addAttribute("message", "관리자 회원가입이 성공적으로 완료되었습니다.");
-        return "ManagerSignUpSuccess"; // 성공 메시지 페이지로 이동
-    }
 
     // 관리자 로그인 페이지 반환
     @GetMapping("/login")
@@ -166,4 +146,5 @@ public class ManagerMainController {
     }
 
     // 추가로 필요한 관리자 기능들을 이곳에 작성하면 됩니다.
+
 }

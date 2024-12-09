@@ -22,7 +22,8 @@
 <div class="container">
     <h1>Create Lost Item Report</h1>
 
-    <form action="/lost-items/create" method="post">
+    <!-- /manager/lost-items/create로 수정 -->
+    <form action="/manager/lost-items/create" method="post">
         <div class="form-group">
             <label for="itemName">Item Name</label>
             <input type="text" class="form-control" id="itemName" name="itemName" required>
@@ -31,17 +32,17 @@
             <label for="category">Category</label>
             <select class="form-control" id="category" name="category" required>
                 <option value="" disabled selected>Select a category</option>
-                <option value="Electronics">전자기기</option>
-                <option value="Clothing">의류</option>
-                <option value="Accessories">액세서리</option>
-                <option value="Documents">문서/서류</option>
-                <option value="Wallets">지갑/파우치</option>
-                <option value="Bags">가방</option>
-                <option value="Jewelry">귀금속/보석류</option>
-                <option value="Keys">열쇠/키</option>
-                <option value="Glasses">안경/선글라스</option>
-                <option value="Umbrellas">우산</option>
-                <option value="Others">기타</option>
+                <option value="전자기기">전자기기</option>
+                <option value="의류">의류</option>
+                <option value="액세서리">액세서리</option>
+                <option value="문서/서류">문서/서류</option>
+                <option value="지갑/파우치">지갑/파우치</option>
+                <option value="가방">가방</option>
+                <option value="귀금속/보석류">귀금속/보석류</option>
+                <option value="열쇠/키">열쇠/키</option>
+                <option value="안경/선글라스">안경/선글라스</option>
+                <option value="우산">우산</option>
+                <option value="기타">기타</option>
             </select>
         </div>
         <div class="form-group">
@@ -50,14 +51,24 @@
         </div>
         <div class="form-group">
             <label for="foundLocation">Found Location</label>
-            <input type="text" class="form-control" id="foundLocation" name="foundLocation" required>
+            <select class="form-control" id="foundLocation" name="foundLocation" required>
+                <option value="" disabled selected>Select a location</option>
+                <option value="정보통신대학 1호관 2층">정보통신대학 1호관 2층</option>
+                <option value="정보통신대학 1호관 3층">정보통신대학 1호관 3층</option>
+                <option value="정보통신대학 1호관 4층">정보통신대학 1호관 4층</option>
+                <option value="정보통신대학 1호관 5층">정보통신대학 1호관 5층</option>
+                <option value="정보통신대학 1호관 6층">정보통신대학 1호관 6층</option>
+                <option value="정보통신대학 1호관 7층">정보통신대학 1호관 7층</option>
+                <option value="기타">기타</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="reporterName">Reporter Name (Optional)</label>
             <input type="text" class="form-control" id="reporterName" name="reporterName">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="button" onclick="location.href='/lost-items'" class="btn btn-secondary">Cancel</button>
+        <!-- 취소 버튼도 /manager 붙이기 -->
+        <button type="button" onclick="location.href='/manager/lost-items'" class="btn btn-secondary">Cancel</button>
     </form>
 </div>
 </body>

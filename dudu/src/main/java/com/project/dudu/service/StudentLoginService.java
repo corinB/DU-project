@@ -3,18 +3,15 @@ package com.project.dudu.service;
 import com.project.dudu.dto.StudentDto;
 import com.project.dudu.entities.StudentEntity;
 import com.project.dudu.repositories.StudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class StudentLoginService {
 
     private final StudentRepository studentRepository;
-
-    @Autowired
-    public StudentLoginService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
 
     // 인증 로직
     public StudentDto authenticate(Long studentId, String password) {

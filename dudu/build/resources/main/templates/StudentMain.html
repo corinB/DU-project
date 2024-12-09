@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>학생 메인 페이지</title>
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
-        /* 추가적인 스타일이 필요하다면 여기에 작성하세요 */
+        /* 컨테이너 상단 여백 */
         .main-container {
             margin-top: 50px;
         }
+
+        /* 버튼 공통 스타일 */
         .btn-custom {
             margin: 10px;
             width: 200px;
@@ -19,9 +22,10 @@
 <div class="container text-center main-container">
     <h1>안녕하세요, <span th:text="${studentName}">학생</span>님!</h1>
     <div class="mt-4">
+        <!-- 관리자 메인 페이지 코드와 유사한 버튼 스타일 적용 -->
         <a href="/student/lost-items" class="btn btn-primary btn-custom">분실물 신고 목록</a>
-        <a href="/reservation" class="btn btn-secondary btn-custom">사물함 예약</a>
-        <a href="/student/profile" class="btn btn-info btn-custom">회원정보 조회</a>
+        <a href="/student/reserve" class="btn btn-secondary btn-custom">사물함 예약</a>
+        <a href="/student/my-info" class="btn btn-info btn-custom">회원정보 조회</a>
         <a href="/student/logout" class="btn btn-danger btn-custom">로그아웃</a>
     </div>
 </div>

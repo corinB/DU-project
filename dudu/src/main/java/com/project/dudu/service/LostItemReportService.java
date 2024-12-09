@@ -3,6 +3,7 @@ package com.project.dudu.service;
 import com.project.dudu.dto.LostItemReportDto;
 import com.project.dudu.entities.LostItemReportEntity;
 import com.project.dudu.repositories.LostItemReportRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +13,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class LostItemReportService {
 
     private final LostItemReportRepository lostItemReportRepository;
 
-    @Autowired
-    public LostItemReportService(LostItemReportRepository lostItemReportRepository) {
-        this.lostItemReportRepository = lostItemReportRepository;
-    }
 
     // 모든 분실물 신고 조회
     public List<LostItemReportDto> getAllReports() {

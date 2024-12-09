@@ -4,7 +4,11 @@ import com.project.dudu.entities.StudentEntity;
 import com.project.dudu.enums.Colleges;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,4 +81,15 @@ class StudentRepositoryTest {
         }
 
     }
+
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    void findByDepartment() {
+        Pageable pageable = PageRequest.of(0,2, Sort.by("studentId").ascending());
+        studentRepository.findAllByDepartment(Colleges.Engineering, pageable).forEach(
+                studentEntity -> System.out.println("학생: "+studentEntity.getStudentName())
+        );
+    }
+
 }

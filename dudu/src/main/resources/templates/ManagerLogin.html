@@ -11,6 +11,13 @@
 <body>
 <div class="container mt-5">
     <h1 class="text-center">관리자 로그인</h1>
+
+    <!-- 이미지 삽입 시작 -->
+    <div class="text-center my-4">
+        <img th:src="@{/images/logo.png}" alt="메인 이미지" width="400">
+    </div>
+    <!-- 이미지 삽입 끝 -->
+
     <form action="/manager/login" method="post" th:object="${managerDto}">
         <div class="form-group">
             <label for="email">이메일</label>
@@ -23,7 +30,7 @@
         <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
             <p th:text="${errorMessage}"></p>
         </div>
-        <button type="submit" class="btn btn-primary btn-block">로그인</button>
+        <button type="submit" class="btn btn-success btn-block">로그인</button>
     </form>
 </div>
 </body>

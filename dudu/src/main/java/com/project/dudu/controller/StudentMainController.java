@@ -1,10 +1,10 @@
 package com.project.dudu.controller;
 
+import com.project.dudu.dto.ReservationDto;
 import com.project.dudu.dto.StudentDto;
-import com.project.dudu.service.LostItemReportService;
-import com.project.dudu.service.SignUpService;
-import com.project.dudu.service.StudentLoginService;
+import com.project.dudu.service.*;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,41 +12,38 @@ import org.springframework.web.bind.annotation.*;
 
 // 학생 메인 컨트롤러
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/student")
 public class StudentMainController {
 
     private final StudentLoginService studentLoginService;
     private final LostItemReportService lostItemReportService;
     private final SignUpService signUpService;
+    private final ReservationService reservationService;
+    private final SearchService searchService;
 
-    @Autowired
-    public StudentMainController(StudentLoginService studentLoginService,
-                                 LostItemReportService lostItemReportService,
-                                 SignUpService signUpService) {
-        this.studentLoginService = studentLoginService;
-        this.lostItemReportService = lostItemReportService;
-        this.signUpService = signUpService;
-    }
 
-    // 회원가입 페이지 반환
-    @GetMapping("/signup")
-    public String showSignUpForm(Model model) {
-        model.addAttribute("studentDto", new StudentDto());
-        return "SignUp"; // SignUp.html 반환
-    }
-
-    // 회원가입 요청 처리
-    @PostMapping("/signup")
-    public String registerStudent(@ModelAttribute("studentDto") StudentDto studentDto, Model model) {
-        signUpService.registerStudent(studentDto);
-        model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다.");
-        return "SignUpSuccess"; // 성공 메시지 페이지로 이동
-    }
+//
+//    // 회원가입 페이지 반환
+//    @GetMapping("/signup")
+//    public String showSignUpForm(Model model) {
+//        model.addAttribute("studentId", null);
+//        return "SignUp"; // SignUp.html 반환
+//    }
+//
+//    // 회원가입 요청 처리
+//    @PostMapping("/signup")
+//    public String registerStudent(@ModelAttribute("studentDto") StudentDto studentDto, Model model) {
+//        signUpService.registerStudent(studentDto);
+//        model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다.");
+//        return "SignUpSuccess"; // 성공 메시지 페이지로 이동
+//    }
 
     // 로그인 페이지 반환
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        model.addAttribute("studentDto", new StudentDto());
+        model.addAttribute("studentId", null);
+        model.addAttribute("studentDto", StudentDto.builder().build());
         return "StudentLogin"; // StudentLogin.html 반환
     }
 
@@ -55,8 +52,10 @@ public class StudentMainController {
     public String login(@ModelAttribute("studentDto") StudentDto studentDto, Model model, HttpSession session) {
         StudentDto authenticatedStudent = studentLoginService.authenticate(studentDto.getStudentId(), studentDto.getPassword());
         if (authenticatedStudent != null) {
+            Long studentId = authenticatedStudent.getStudentId();
             // 로그인 성공 시 세션에 학생 정보 저장
             session.setAttribute("student", authenticatedStudent);
+            session.setAttribute("studentId", studentId);
             return "redirect:/student/main"; // 학생 메인 페이지로 리다이렉트
         } else {
             // 로그인 실패 시 에러 메시지 표시
@@ -97,5 +96,43 @@ public class StudentMainController {
         return "StudentLostItems"; // 학생용 분실물 목록 페이지
     }
 
+//-------------------------------------------------------------------------------------------------------------
+
     // 추가로 필요한 학생 기능들을 이곳에 작성하면 됩니다.
+       /**
+        * 학생 예약 페이지
+        * @param student 세션에 있는 정보 확인
+        *                       null 이면 로그인 페이지로 이동
+        * @return Reservation
+        **/
+        @GetMapping("/reserve")
+        public String reservation(@SessionAttribute(name = "student", required = false) StudentDto student) {
+            if (student == null) return "redirect:/student/login";
+            return "StudentReserve";
+        }
+    //-------------------------------------------------------------------------------------------------------------
+        /**
+         * 예약 처리
+         * @param studentId 세션의 학번 확인
+         * @param reservationDto 예약정보
+         * @param model Model
+         * @return StudentReserve
+         **/
+    @PostMapping("/reserve")
+    public String tryReservation(@SessionAttribute(name = "studentId", required = false) Long studentId,
+                                 @ModelAttribute ReservationDto reservationDto, Model model) {
+        reservationDto.setStudentId(studentId);
+        var dto = reservationService.reserve(reservationDto);
+        if (dto == null) return "FailRes";
+        model.addAttribute("dto", dto);
+        return "SuccessRes";
+    }
+
+    @GetMapping("/my-info")
+    public String findMyInfo (@SessionAttribute(name = "student") StudentDto student, Model model) {
+        var studentId = student.getStudentId();
+        var dto = searchService.searchByStudentId(studentId);
+        model.addAttribute("dto", dto);
+        return "/StudentPage/MyInfo";
+    }
 }

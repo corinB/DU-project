@@ -1,7 +1,10 @@
 package com.project.dudu.repositories;
 
 import com.project.dudu.entities.ReservationEntity;
+import com.project.dudu.entities.StudentEntity;
 import com.project.dudu.enums.ReservationType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -51,4 +54,15 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     List<ReservationEntity> findReservationsAfterTimeByType(LocalDateTime time, ReservationType type);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * 메니저페이지에서 학생 예약 찾기
+     * @param studentId 학생
+     * @param page 페이지
+     *                 null 이면 1 페이지로 이동
+     * @return List<ReservationEntity> 학생 예약 내역
+     **/
+    String findAllByStudentIdQuery = "select r from ReservationEntity r where r.student.studentId = :studentId";
+    @Query(value = findAllByStudentIdQuery)
+    Page<ReservationEntity> findAllByStudentId(Long studentId, Pageable page);
 }

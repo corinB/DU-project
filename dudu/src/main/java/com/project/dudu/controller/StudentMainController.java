@@ -23,21 +23,21 @@ public class StudentMainController {
     private final SearchService searchService;
 
 
-
-    // 회원가입 페이지 반환
-    @GetMapping("/signup")
-    public String showSignUpForm(Model model) {
-        model.addAttribute("studentId", null);
-        return "SignUp"; // SignUp.html 반환
-    }
-
-    // 회원가입 요청 처리
-    @PostMapping("/signup")
-    public String registerStudent(@ModelAttribute("studentDto") StudentDto studentDto, Model model) {
-        signUpService.registerStudent(studentDto);
-        model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다.");
-        return "SignUpSuccess"; // 성공 메시지 페이지로 이동
-    }
+//
+//    // 회원가입 페이지 반환
+//    @GetMapping("/signup")
+//    public String showSignUpForm(Model model) {
+//        model.addAttribute("studentId", null);
+//        return "SignUp"; // SignUp.html 반환
+//    }
+//
+//    // 회원가입 요청 처리
+//    @PostMapping("/signup")
+//    public String registerStudent(@ModelAttribute("studentDto") StudentDto studentDto, Model model) {
+//        signUpService.registerStudent(studentDto);
+//        model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다.");
+//        return "SignUpSuccess"; // 성공 메시지 페이지로 이동
+//    }
 
     // 로그인 페이지 반환
     @GetMapping("/login")

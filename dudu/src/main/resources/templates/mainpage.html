@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>대구대학교 사물함 예약 페이지</title>
+    <style>
+        /* 공통 버튼 스타일 */
+        .btn {
+            font-size: 18px;
+            padding: 10px 20px;
+            width: 200px;
+            height: 50px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* 로그인 버튼 스타일 (밝은 초록색) */
+        .btn-login {
+            background-color: #28a745; /* Bootstrap의 success 색상 */
+        }
+        /* 회원가입 버튼 스타일 (진한 녹색) */
+        .btn-signup {
+            background-color: #006400; /* 진한 녹색 */
+        }
+        /* 호버 효과 */
+        .btn-login:hover {
+            background-color: #218838;
+        }
+        .btn-signup:hover {
+            background-color: #005000;
+        }
+
+        /* 아이콘 스타일: margin-right를 12px로 늘려 아이콘이 텍스트와 더 멀어지게 함 */
+        .btn img {
+            vertical-align: middle;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td align="center" valign="middle">
+            <!-- 메인 콘텐츠 시작 -->
+            <table border="0" cellspacing="20" cellpadding="0">
+                <tr>
+                    <td align="center">
+                        <h1>안녕하세요<br>대구대학교 사물함 예약 페이지입니다</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <!-- 이미지 삽입 -->
+                        <img src="/images/logo.png" alt="메인 이미지" width="400">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <!-- 로그인 및 회원가입 버튼들 -->
+                        <table border="0" cellspacing="10" cellpadding="0">
+                            <!-- 로그인 버튼들 -->
+                            <tr>
+                                <td align="center">
+                                    <!-- 학생 로그인 버튼 -->
+                                    <form action="/student/login" method="get">
+                                        <button type="submit" class="btn btn-login">
+                                            <img src="/images/login.png" alt="자물쇠 아이콘" width="20">
+                                            학생 로그인
+                                        </button>
+                                    </form>
+                                </td>
+                                <td align="center">
+                                    <!-- 관리자 로그인 버튼 -->
+                                    <form action="/manager/login" method="get">
+                                        <button type="submit" class="btn btn-login">
+                                            <img src="/images/login.png" alt="자물쇠 아이콘" width="20">
+                                            관리자 로그인
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <!-- 회원가입 버튼들 -->
+                            <tr>
+                                <td align="center">
+                                    <!-- 학생 회원가입 버튼 -->
+                                    <form action="/student/signup" method="get">
+                                        <button type="submit" class="btn btn-signup">
+                                            학생 회원가입
+                                        </button>
+                                    </form>
+                                </td>
+                                <td align="center">
+                                    <!-- 관리자 회원가입 버튼 -->
+                                    <form action="/manager/signup" method="get">
+                                        <button type="submit" class="btn btn-signup">
+                                            관리자 회원가입
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <!-- 메인 콘텐츠 끝 -->
+        </td>
+    </tr>
+</table>
+</body>
+</html>

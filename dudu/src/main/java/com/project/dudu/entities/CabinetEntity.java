@@ -1,5 +1,6 @@
 package com.project.dudu.entities;
 
+import com.project.dudu.dto.CabinetDto;
 import com.project.dudu.entities.util.DefaultListener;
 import com.project.dudu.entities.util.IEntityAdapter;
 import com.project.dudu.enums.Colleges;
@@ -35,4 +36,11 @@ public class CabinetEntity implements IEntityAdapter<LocalDateTime> {
     @ToString.Exclude
     @Builder.Default
     private List<ReservationEntity> reservationList = new ArrayList<>();
+
+    public CabinetDto toDto() {
+        return CabinetDto.builder()
+                .cabinetId(this.cabinetId)
+                .department(this.department.getName())
+                .build();
+    }
 }

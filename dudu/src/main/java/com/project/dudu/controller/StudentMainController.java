@@ -5,7 +5,6 @@ import com.project.dudu.dto.StudentDto;
 import com.project.dudu.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,26 +17,9 @@ public class StudentMainController {
 
     private final StudentService studentLoginService;
     private final LostItemReportService lostItemReportService;
-    private final StudentService signUpService;
     private final ReservationService reservationService;
     private final SearchService searchService;
 
-
-//
-//    // 회원가입 페이지 반환
-//    @GetMapping("/signup")
-//    public String showSignUpForm(Model model) {
-//        model.addAttribute("studentId", null);
-//        return "SignUp"; // SignUp.html 반환
-//    }
-//
-//    // 회원가입 요청 처리
-//    @PostMapping("/signup")
-//    public String registerStudent(@ModelAttribute("studentDto") StudentDto studentDto, Model model) {
-//        signUpService.registerStudent(studentDto);
-//        model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다.");
-//        return "SignUpSuccess"; // 성공 메시지 페이지로 이동
-//    }
 
     // 로그인 페이지 반환
     @GetMapping("/login")

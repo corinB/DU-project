@@ -65,4 +65,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     String findAllByStudentIdQuery = "select r from ReservationEntity r where r.student.studentId = :studentId";
     @Query(value = findAllByStudentIdQuery)
     Page<ReservationEntity> findAllByStudentId(Long studentId, Pageable page);
+
+
 }

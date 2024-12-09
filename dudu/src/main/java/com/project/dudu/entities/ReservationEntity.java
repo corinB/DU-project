@@ -51,6 +51,10 @@ public class ReservationEntity implements IEntityAdapter<LocalDateTime> {
     @Builder.Default
     private List<MessageEntity> messageList = new ArrayList<>();
 
+    public boolean isDone(){
+        return reservationTime.isBefore(LocalDateTime.now());
+    }
+
     public ReservationDto toDto() {
         return ReservationDto.builder()
                 .reservationType(reservationType.name())

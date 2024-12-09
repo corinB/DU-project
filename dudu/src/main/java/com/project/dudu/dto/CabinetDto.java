@@ -20,6 +20,9 @@ public class CabinetDto {
     @JsonProperty(value = "cabinet_department")
     private String department;
 
+    @JsonProperty(value = "can_reserve")
+    private boolean canReserve;
+
     public Colleges getCollege() {
         return Colleges.getByName(this.department);
     }

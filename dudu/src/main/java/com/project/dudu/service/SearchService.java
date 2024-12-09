@@ -1,10 +1,13 @@
 package com.project.dudu.service;
 
+import com.project.dudu.dto.CabinetDto;
 import com.project.dudu.dto.ReservationDto;
 import com.project.dudu.dto.StudentDto;
+import com.project.dudu.entities.CabinetEntity;
 import com.project.dudu.entities.ReservationEntity;
 import com.project.dudu.entities.StudentEntity;
 import com.project.dudu.enums.Colleges;
+import com.project.dudu.repositories.CabinetRepository;
 import com.project.dudu.repositories.ReservationRepository;
 import com.project.dudu.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +16,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class SearchService {
     private final StudentRepository studentRepository;
     private final ReservationRepository reservationRepository;
+    private final CabinetRepository cabinetRepository;
 
 
     //-------------------------------------------------------------------------------------------------
@@ -74,6 +80,20 @@ public class SearchService {
     @Transactional
     public Page<ReservationDto> findStudentReservation(Long studentId, Pageable pageable) {
         return reservationRepository.findAllByStudentId(studentId, pageable).map(ReservationEntity::toDto);
+    }
+    //*******************************************************************************************
+
+    @Transactional
+    public Page<CabinetDto> cabinetSearch(Pageable pageable) {
+        var cabinets = cabinetRepository.findAll(pageable);
+        return cabinets.map(CabinetEntity::toDto);
+    }
+
+    @Transactional
+    public List<CabinetDto> cabinetSearchByDepartment(String department) {
+        var college = Colleges.getByName(department);
+        var cabinets = cabinetRepository.findAllByDepartment(college);
+        return cabinets.stream().map(CabinetEntity::toDto).toList();
     }
 
 }

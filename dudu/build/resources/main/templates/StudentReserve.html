@@ -3,16 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>예약 페이지</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         .reservation-container {
-            max-width: 500px;
+            max-width: 800px;
             margin: 50px auto;
         }
         .card-header {
             font-size: 1.5rem;
             font-weight: 600;
+        }
+        .cabinet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .cabinet-item {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .cabinet-item.available {
+            background-color: white;
+            color: black;
+            border-color: #28a745;
+        }
+        .cabinet-item.unavailable {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+            cursor: not-allowed;
+        }
+        .cabinet-item.selected {
+            background-color: #28a745;
+            color: white;
         }
         .btn-submit {
             width: 100%;
@@ -24,31 +54,71 @@
 <div class="container reservation-container">
     <div class="card">
         <div class="card-header text-center">
-            예약 페이지
+            예약 가능한 사물함 선택
         </div>
         <div class="card-body">
-            <!-- action 경로를 /reservation/try로 변경 -->
-            <form action="/reservation/try" method="post" th:object="${reservationDto}">
-                <div class="form-group">
-                    <label for="studentId">학생 ID</label>
-                    <input type="number" class="form-control" id="studentId" name="studentId" placeholder="학생 ID를 입력하세요" required>
+            <form action="/student/reserve" method="post" th:object="${reservationDto}">
+                <input type="hidden" id="studentId" name="studentId" th:value="${session.studentId}"/>
+
+                <!-- 사물함 배치도 -->
+                <div class="cabinet-grid">
+                    <div th:each="cabinet : ${cabinets}"
+                         th:classappend="${cabinet.canReserve} ? 'available' : 'unavailable'"
+                         class="cabinet-item"
+                         th:data-id="${cabinet.cabinetId}"
+                         th:data-department="${cabinet.department}">
+                        <span th:text="'사물함 ID: ' + ${cabinet.cabinetId}"></span>
+                        <br/>
+                        <small th:text="${cabinet.department}"></small>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="cabinetId">캐비닛 ID</label>
-                    <input type="number" class="form-control" id="cabinetId" name="cabinetId" placeholder="캐비닛 ID를 입력하세요" required>
-                </div>
-                <div class="form-group">
-                    <label for="reservationType">예약 형태</label>
+
+                <!-- 선택한 사물함 ID 저장 -->
+                <input type="hidden" id="cabinetId" name="cabinetId" required>
+
+                <div class="form-group mt-3">
+                    <label for="reservationType">예약 유형</label>
                     <select class="form-control" id="reservationType" name="reservationType" required>
                         <option value="" disabled selected>예약 유형 선택</option>
                         <option value="Semester">Semester</option>
                         <option value="Day">Day</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-submit">예약하기</button>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary btn-submit mt-3">예약하기</button>
+                    <button type="button" id="cancelSelection" class="btn btn-danger mt-3">선택 취소</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
+
+<!-- JavaScript 로직 -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cabinetItems = document.querySelectorAll(".cabinet-item.available");
+        const cabinetIdInput = document.getElementById("cabinetId");
+        const cancelSelectionButton = document.getElementById("cancelSelection");
+
+        // 사물함 선택 로직
+        cabinetItems.forEach(item => {
+            item.addEventListener("click", function () {
+                // 기존 선택된 항목 초기화
+                cabinetItems.forEach(i => i.classList.remove("selected"));
+
+                // 선택 항목 활성화
+                this.classList.add("selected");
+                cabinetIdInput.value = this.dataset.id;
+            });
+        });
+
+        // 선택 취소 버튼 로직
+        cancelSelectionButton.addEventListener("click", function () {
+            cabinetItems.forEach(item => item.classList.remove("selected"));
+            cabinetIdInput.value = ""; // 선택한 사물함 ID 초기화
+        });
+    });
+</script>
 </body>
 </html>

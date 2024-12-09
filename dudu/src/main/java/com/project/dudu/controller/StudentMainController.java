@@ -1,10 +1,14 @@
 package com.project.dudu.controller;
 
+import com.project.dudu.dto.CabinetDto;
 import com.project.dudu.dto.ReservationDto;
 import com.project.dudu.dto.StudentDto;
 import com.project.dudu.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -88,8 +92,10 @@ public class StudentMainController {
         * @return Reservation
         **/
         @GetMapping("/reserve")
-        public String reservation(@SessionAttribute(name = "student", required = false) StudentDto student) {
+        public String reservation(@SessionAttribute(name = "student", required = false) StudentDto student, Model model) {
             if (student == null) return "redirect:/student/login";
+            var cabinets = searchService.cabinetSearchByDepartment(student.getDepartment());
+            model.addAttribute("cabinets", cabinets);
             return "StudentReserve";
         }
     //-------------------------------------------------------------------------------------------------------------
@@ -117,4 +123,12 @@ public class StudentMainController {
         model.addAttribute("dto", dto);
         return "/StudentPage/MyInfo";
     }
+
+    @GetMapping(value = "/cabinet", params = "department")
+    public String findCabinet(@RequestParam(name = "department") String department,Model model) {
+        var dto = searchService.cabinetSearchByDepartment(department);
+        model.addAttribute("dto", dto);
+        return "/StudentPage/Cabinet";
+    }
+
 }

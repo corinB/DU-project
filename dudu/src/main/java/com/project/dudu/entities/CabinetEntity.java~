@@ -47,7 +47,6 @@ public class CabinetEntity implements IEntityAdapter<LocalDateTime> {
         return CabinetDto.builder()
                 .cabinetId(this.cabinetId)
                 .department(this.department.getName())
-                .canReserve(this.canReserve())
                 .build();
     }
 }

@@ -1,6 +1,7 @@
 package com.project.dudu.controller;
 
 
+import com.project.dudu.dto.CabinetDto;
 import com.project.dudu.dto.ReservationDto;
 import com.project.dudu.dto.StudentDto;
 import com.project.dudu.service.SearchService;
@@ -60,8 +61,6 @@ public class SearchController {
         log.info("student : {}", student);
         return searchService.findStudentReservation(studentId, pageable);
     }
-
-
 
 
 

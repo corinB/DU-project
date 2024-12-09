@@ -21,7 +21,6 @@ import java.util.List;
 @EntityListeners(value = DefaultListener.class)
 public class StudentEntity implements IEntityAdapter<LocalDateTime> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long studentId;
 
     private String password;

@@ -3,8 +3,8 @@ package com.project.dudu.controller;
 import com.project.dudu.dto.LostItemReportDto;
 import com.project.dudu.dto.ManagerDto;
 import com.project.dudu.service.LostItemReportService;
-import com.project.dudu.service.ManageSignUpService;
-import com.project.dudu.service.ManagerLoginService;
+import com.project.dudu.service.ManagerService;
+import com.project.dudu.service.ManagerService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/manager")
 public class ManagerMainController {
 
-    private final ManagerLoginService managerLoginService;
-    private final ManageSignUpService manageSignUpService;
+    private final ManagerService managerService;
     private final LostItemReportService lostItemReportService;
 
 
@@ -53,7 +52,7 @@ public class ManagerMainController {
     // 관리자 로그인 처리
     @PostMapping("/login")
     public String login(@ModelAttribute("managerDto") ManagerDto managerDto, Model model, HttpSession session) {
-        ManagerDto authenticatedManager = managerLoginService.authenticate(managerDto.getEmail(), managerDto.getPassword());
+        ManagerDto authenticatedManager = managerService.authenticate(managerDto.getEmail(), managerDto.getPassword());
         if (authenticatedManager != null) {
             // 로그인 성공 시 세션에 관리자 정보 저장
             session.setAttribute("manager", authenticatedManager);

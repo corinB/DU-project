@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/student")
 public class StudentMainController {
 
-    private final StudentLoginService studentLoginService;
+    private final StudentService studentLoginService;
     private final LostItemReportService lostItemReportService;
-    private final SignUpService signUpService;
+    private final StudentService signUpService;
     private final ReservationService reservationService;
     private final SearchService searchService;
 

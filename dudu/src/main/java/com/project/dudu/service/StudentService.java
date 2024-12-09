@@ -5,7 +5,6 @@ import com.project.dudu.entities.StudentEntity;
 import com.project.dudu.enums.Colleges;
 import com.project.dudu.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class SignUpService {
+public class StudentService {
 
     private final StudentRepository studentRepository;
 
@@ -36,7 +35,7 @@ public class SignUpService {
             throw new IllegalArgumentException("유효하지 않은 학과입니다.");
         }
 
-        // StudentEntity 생성 및 필드 설정
+        // StudentEntity 생성
         StudentEntity studentEntity = StudentEntity.builder()
                 .studentId(studentDto.getStudentId())
                 .studentName(studentDto.getStudentName())
@@ -49,8 +48,17 @@ public class SignUpService {
         // 저장
         StudentEntity savedEntity = studentRepository.save(studentEntity);
 
-        // 저장된 엔티티를 DTO로 변환하여 반환
+        // 엔티티를 DTO로 변환하여 반환
         return convertToDto(savedEntity);
+    }
+
+    // 로그인(인증) 처리 로직
+    public StudentDto authenticate(Long studentId, String password) {
+        StudentEntity student = studentRepository.findById(studentId).orElse(null);
+        if (student != null && student.getPassword().equals(password)) {
+            return convertToDto(student);
+        }
+        return null; // 인증 실패 시 null 반환
     }
 
     // Entity를 DTO로 변환하는 헬퍼 메서드
@@ -58,7 +66,7 @@ public class SignUpService {
         return StudentDto.builder()
                 .studentId(entity.getStudentId())
                 .studentName(entity.getStudentName())
-                .department(entity.getDepartment().name()) // 열거형 이름 사용
+                .department(entity.getDepartment().getName()) // 열거형에서 한글 학과명 반환 가정
                 .build();
     }
 }

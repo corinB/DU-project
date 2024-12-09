@@ -2,10 +2,7 @@ package com.project.dudu.controller;
 
 import com.project.dudu.dto.ReservationDto;
 import com.project.dudu.dto.StudentDto;
-import com.project.dudu.service.LostItemReportService;
-import com.project.dudu.service.ReservationService;
-import com.project.dudu.service.SignUpService;
-import com.project.dudu.service.StudentLoginService;
+import com.project.dudu.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +20,7 @@ public class StudentMainController {
     private final LostItemReportService lostItemReportService;
     private final SignUpService signUpService;
     private final ReservationService reservationService;
+    private final SearchService searchService;
 
 
 //
@@ -107,7 +105,7 @@ public class StudentMainController {
         *                       null 이면 로그인 페이지로 이동
         * @return Reservation
         **/
-        @GetMapping("/main/reserve")
+        @GetMapping("/reserve")
         public String reservation(@SessionAttribute(name = "student", required = false) StudentDto student) {
             if (student == null) return "redirect:/student/login";
             return "StudentReserve";
@@ -120,12 +118,21 @@ public class StudentMainController {
          * @param model Model
          * @return StudentReserve
          **/
-    @PostMapping("/main/reserve")
-    public String tryReservation(@SessionAttribute(name = "studentId", required = false) Long studentId, @ModelAttribute ReservationDto reservationDto, Model model) {
+    @PostMapping("/reserve")
+    public String tryReservation(@SessionAttribute(name = "studentId", required = false) Long studentId,
+                                 @ModelAttribute ReservationDto reservationDto, Model model) {
         reservationDto.setStudentId(studentId);
         var dto = reservationService.reserve(reservationDto);
         if (dto == null) return "FailRes";
         model.addAttribute("dto", dto);
         return "SuccessRes";
+    }
+
+    @GetMapping("/my-info")
+    public String findMyInfo (@SessionAttribute(name = "student") StudentDto student, Model model) {
+        var studentId = student.getStudentId();
+        var dto = searchService.searchByStudentId(studentId);
+        model.addAttribute("dto", dto);
+        return "/StudentPage/MyInfo";
     }
 }

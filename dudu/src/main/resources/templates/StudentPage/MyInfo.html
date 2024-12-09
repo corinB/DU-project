@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>내 정보</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 포함 -->
+</head>
+<body>
+<h1>내 정보</h1>
+<p>학생 ID: <span th:text="${dto.studentId}" id="studentId">학생 ID 없음</span></p>
+<p>학생 이름: <span th:text="${dto.studentName}">학생 이름 없음</span></p>
+<p>소속: <span th:text="${dto.department}">소속 없음</span></p>
+
+<!-- 예약 조회 버튼 추가 -->
+<button id="loadReservationBtn">예약 조회</button>
+
+<!-- 예약 정보가 추가될 공간 -->
+<div id="reservationContainer"></div>
+
+<script>
+    $(document).ready(function() {
+        $('#loadReservationBtn').click(function() {
+            // 예약 정보를 가져오는 AJAX 요청
+            const studentId =  $('#studentId').text();;
+            $.ajax({
+                url: '/search/reservation', // 예약 정보 조회 API
+                method: 'GET',
+                data: { 'student-id': studentId },
+                success: function(data) {
+                    // 예약 정보 표시
+                    let reservationsHTML = '<h2>예약 목록</h2>';
+                    if (data.content.length === 0) {
+                        reservationsHTML += '<p>예약 내역이 없습니다.</p>';
+                    } else {
+                        data.content.forEach(function(reservation) {
+                            reservationsHTML += `
+                                <p>예약 시작 시간: ${new Date(reservation.reservationStartTime).toLocaleString()}</p>
+                                <p>예약 종료 시간: ${new Date(reservation.reservationEndTime).toLocaleString()}</p>
+                                <p>예약 타입: ${reservation.reservationType}</p>
+                                <hr />
+                            `;
+                        });
+                    }
+                    // 예약 정보를 예약 영역에 추가
+                    $('#reservationContainer').html(reservationsHTML);
+                },
+                error: function(xhr, status, error) {
+                    alert('예약 정보를 불러오는 데 실패했습니다.');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

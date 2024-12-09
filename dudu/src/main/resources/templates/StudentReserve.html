@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>예약 페이지</h1>
-<form action="/student/main/reserve" method="post" th:object="${reservationDto}">
+<form action="/student/reserve" method="post" th:object="${reservationDto}">
     <br><br>
     <label for="cabinetId">캐비닛 ID:</label>
     <input type="number" id="cabinetId" name="cabinetId" placeholder="cabinetId" required>

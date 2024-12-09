@@ -2,7 +2,7 @@ package com.project.dudu.controller;
 
 import com.project.dudu.dto.ManagerDto;
 import com.project.dudu.dto.StudentDto;
-import com.project.dudu.service.ManageSignUpService;
+import com.project.dudu.service.ManagerService;
 import com.project.dudu.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class FirstPageController {
 
-    private final ManageSignUpService manageSignUpService;
+    private final ManagerService manageSignUpService;
     private final SignUpService signUpService;
 
     // 메인 페이지 반환

@@ -5,7 +5,6 @@ import com.project.dudu.entities.ManagerEntity;
 import com.project.dudu.enums.Colleges;
 import com.project.dudu.repositories.ManagerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +13,9 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ManageSignUpService {
+public class ManagerService {
 
     private final ManagerRepository managerRepository;
-
 
     // 관리자 회원가입 처리 메서드
     public ManagerDto registerManager(ManagerDto managerDto) {
@@ -48,7 +46,7 @@ public class ManageSignUpService {
         // ManagerEntity 생성 및 필드 설정
         ManagerEntity managerEntity = ManagerEntity.builder()
                 .email(managerDto.getEmail())
-                .password(password) // 암호화된 비밀번호 사용
+                .password(password) // 암호화된 비밀번호 사용 예정
                 .name(managerDto.getName())
                 .department(departmentEnum)
                 .createAt(LocalDateTime.now())
@@ -62,13 +60,25 @@ public class ManageSignUpService {
         return convertToDto(savedEntity);
     }
 
+    // 관리자 인증(로그인) 로직
+    public ManagerDto authenticate(String email, String password) {
+        ManagerEntity manager = managerRepository.findByEmail(email).orElse(null);
+        if (manager != null) {
+            // 비밀번호 검증 (추후 비밀번호 암호화 시 해시 비교 로직 필요)
+            if (manager.getPassword().equals(password)) {
+                return convertToDto(manager);
+            }
+        }
+        return null; // 인증 실패 시 null 반환
+    }
+
     // Entity를 DTO로 변환하는 헬퍼 메서드
     private ManagerDto convertToDto(ManagerEntity entity) {
         return ManagerDto.builder()
                 .id(entity.getId())
                 .email(entity.getEmail())
                 .name(entity.getName())
-                .department(entity.getDepartment().getName()) // 한글 학과명 사용
+                .department(entity.getDepartment().getName())
                 .build();
     }
 }

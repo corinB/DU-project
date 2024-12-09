@@ -3,8 +3,8 @@ package com.project.dudu.controller;
 import com.project.dudu.dto.LostItemReportDto;
 import com.project.dudu.dto.ManagerDto;
 import com.project.dudu.service.LostItemReportService;
-import com.project.dudu.service.ManageSignUpService;
-import com.project.dudu.service.ManagerLoginService;
+import com.project.dudu.service.ManagerService;
+import com.project.dudu.service.ManagerService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/manager")
 public class ManagerMainController {
 
-    private final ManagerLoginService managerLoginService;
-    private final ManageSignUpService manageSignUpService;
+    private final ManagerService managerLoginService;
+    private final ManagerService manageSignUpService;
     private final LostItemReportService lostItemReportService;
 
 
@@ -40,21 +40,6 @@ public class ManagerMainController {
     public String logout(HttpSession session) {
         session.invalidate(); // 세션 무효화
         return "redirect:/manager/login";
-    }
-
-    // 관리자 회원가입 페이지 반환
-    @GetMapping("/signup")
-    public String showManagerSignUpForm(Model model) {
-        model.addAttribute("managerDto", new ManagerDto());
-        return "ManagerSignUp"; // ManagerSignUp.html 반환
-    }
-
-    // 관리자 회원가입 요청 처리
-    @PostMapping("/signup")
-    public String registerManager(@ModelAttribute("managerDto") ManagerDto managerDto, Model model) {
-        manageSignUpService.registerManager(managerDto);
-        model.addAttribute("message", "관리자 회원가입이 성공적으로 완료되었습니다.");
-        return "ManagerSignUpSuccess"; // 성공 메시지 페이지로 이동
     }
 
     // 관리자 로그인 페이지 반환

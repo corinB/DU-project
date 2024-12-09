@@ -2,8 +2,8 @@ package com.project.dudu.controller;
 
 import com.project.dudu.dto.ManagerDto;
 import com.project.dudu.dto.StudentDto;
-import com.project.dudu.service.ManageSignUpService;
-import com.project.dudu.service.SignUpService;
+import com.project.dudu.service.ManagerService;
+import com.project.dudu.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class FirstPageController {
 
-    private final ManageSignUpService manageSignUpService;
-    private final SignUpService signUpService;
+    private final ManagerService manageSignUpService;
+    private final StudentService signUpService;
 
     // 메인 페이지 반환
     @GetMapping("/dureservation")
@@ -34,7 +34,7 @@ public class FirstPageController {
     public String registerStudent(@ModelAttribute("studentDto") StudentDto studentDto, Model model) {
         signUpService.registerStudent(studentDto);
         model.addAttribute("message", "학생 회원가입이 성공적으로 완료되었습니다.");
-        return "SignUpSuccess"; // 성공 메시지 페이지로 이동
+        return "StudentSignUpSuccess"; // 성공 메시지 페이지로 이동
     }
 
     // 관리자 회원가입 페이지 반환

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>회원가입</title>
+    <title>학생 회원가입</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         /* 추가적인 스타일이 필요하다면 여기에 작성하세요 */
@@ -10,36 +10,33 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="text-center">회원가입</h1>
-    <form action="/student/signup" method="post">
+    <h1 class="text-center">학생 회원가입</h1>
+    <!-- th:object를 사용하여 DTO와 바인딩 -->
+    <form action="/student/signup" method="post" th:object="${studentDto}">
         <div class="form-group">
             <label for="studentId">학번</label>
-            <input type="number" class="form-control" id="studentId" name="studentId" required>
+            <!-- th:field를 사용하여 studentId 바인딩 -->
+            <input type="number" class="form-control" id="studentId" th:field="*{studentId}" required>
         </div>
         <div class="form-group">
             <label for="studentName">이름</label>
-            <input type="text" class="form-control" id="studentName" name="studentName" required>
+            <!-- th:field를 사용하여 studentName 바인딩 -->
+            <input type="text" class="form-control" id="studentName" th:field="*{studentName}" required>
         </div>
         <div class="form-group">
             <label for="department">소속대학</label>
-            <select class="form-control" id="department" name="department" required>
-                <option value="" disabled selected>학과를 선택하세요</option>
-                <option value="정보통신대학">정보통신대학</option>
-                <option value="공과대학">공과대학</option>
-                <option value="인문대학">인문대학</option>
-                <option value="사회과학대학">사회과학대학</option>
-                <option value="과학생명융합대학">과학생명융합대학</option>
-                <option value="사범대학">사범대학</option>
-                <option value="법_행정대학">법_행정대학</option>
-                <option value="경영대학">경영대학</option>
-                <option value="조형예술대학">조형예술대학</option>
-                <option value="재활과학대학">재활과학대학</option>
-                <option value="간호대학">간호대학</option>
+            <!-- Colleges enum 값을 동적으로 불러오기 -->
+            <select class="form-control" id="department" th:field="*{department}" required>
+                <option value="" disabled selected>대학을 선택하세요</option>
+                <option th:each="college : ${T(com.project.dudu.enums.Colleges).values()}"
+                        th:value="${college.name}"
+                        th:text="${college.name}"></option>
             </select>
         </div>
         <div class="form-group">
             <label for="password">비밀번호</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <!-- th:field를 사용하여 password 바인딩 -->
+            <input type="password" class="form-control" id="password" th:field="*{password}" required>
         </div>
         <button type="submit" class="btn btn-primary btn-block">회원가입</button>
     </form>

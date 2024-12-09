@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/manager")
 public class ManagerMainController {
 
-    private final ManagerService managerLoginService;
-    private final ManagerService manageSignUpService;
+    private final ManagerService managerService;
     private final LostItemReportService lostItemReportService;
 
 
@@ -52,7 +51,7 @@ public class ManagerMainController {
     // 관리자 로그인 처리
     @PostMapping("/login")
     public String login(@ModelAttribute("managerDto") ManagerDto managerDto, Model model, HttpSession session) {
-        ManagerDto authenticatedManager = managerLoginService.authenticate(managerDto.getEmail(), managerDto.getPassword());
+        ManagerDto authenticatedManager = managerService.authenticate(managerDto.getEmail(), managerDto.getPassword());
         if (authenticatedManager != null) {
             // 로그인 성공 시 세션에 관리자 정보 저장
             session.setAttribute("manager", authenticatedManager);

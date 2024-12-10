@@ -3,74 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>내 정보</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
-        /* 모달 창 스타일 */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
+        .modal-custom .modal-dialog {
+            max-width: 700px; /* 모달 너비 조정 */
         }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 60%;
-            max-height: 70vh;
-            overflow-y: auto; /* 세로 스크롤 활성화 */
+        .modal-custom .modal-content {
+            border-radius: 8px; /* 모서리 둥글게 */
+        }
+        .reservation-card {
+            border: 1px solid #ddd;
             border-radius: 8px;
-        }
-
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close-btn:hover, .close-btn:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+            padding: 15px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
-<body>
-<h1>내 정보</h1>
-<p>학생 ID: <span th:text="${dto.studentId}" id="studentId">학생 ID 없음</span></p>
-<p>학생 이름: <span th:text="${dto.studentName}">학생 이름 없음</span></p>
-<p>소속: <span th:text="${dto.department}">소속 없음</span></p>
+<body class="bg-light">
+<div class="container mt-5">
+    <h1 class="text-center mb-4">내 정보</h1>
+    <div class="card p-4">
+        <p><strong>학생 ID:</strong> <span th:text="${dto.studentId}" id="studentId">학생 ID 없음</span></p>
+        <p><strong>학생 이름:</strong> <span th:text="${dto.studentName}">학생 이름 없음</span></p>
+        <p><strong>소속:</strong> <span th:text="${dto.department}">소속 없음</span></p>
 
-<!-- 예약 조회 버튼 추가 -->
-<button id="loadReservationBtn">예약 조회</button>
-
-<!-- 모달 창 추가 -->
-<div id="reservationModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>예약 목록</h2>
-        <div id="reservationContainer">예약 내역이 없습니다.</div>
+        <!-- 예약 조회 버튼 -->
+        <div class="text-center mt-4">
+            <button id="loadReservationBtn" class="btn btn-primary">예약 조회</button>
+        </div>
     </div>
 </div>
+
+<!-- 모달 창 (Bootstrap Modal) -->
+<div class="modal fade modal-custom" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reservationModalLabel">예약 목록</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="outline:none;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="reservationContainer">
+                <!-- 예약 정보가 여기 들어갈 예정 -->
+                <p>예약 내역이 없습니다.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS 스크립트 (jQuery, Bootstrap JS) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
     $(document).ready(function() {
         const modal = $('#reservationModal');
         const modalContent = $('#reservationContainer');
 
-        // 예약 버튼 클릭 시
+        // 예약 조회 버튼 클릭 시
         $('#loadReservationBtn').click(function() {
             const studentId = $('#studentId').text().trim();
 
-            // 예약 정보를 가져오는 AJAX 요청
+            // AJAX 요청으로 예약 정보 가져오기
             $.ajax({
                 url: '/search/reservation', // 예약 정보 조회 API
                 method: 'GET',
@@ -83,33 +81,22 @@
                     } else {
                         data.content.forEach(function(reservation) {
                             reservationsHTML += `
-                                <p>예약 시작 시간: ${new Date(reservation.reservationStartTime).toLocaleString()}</p>
-                                <p>예약 종료 시간: ${new Date(reservation.reservationEndTime).toLocaleString()}</p>
-                                <p>예약 타입: ${reservation.reservationType}</p>
-                                <hr />
+                                <div class="reservation-card">
+                                    <p><strong>예약 시작 시간:</strong> ${new Date(reservation.reservationStartTime).toLocaleString()}</p>
+                                    <p><strong>예약 종료 시간:</strong> ${new Date(reservation.reservationEndTime).toLocaleString()}</p>
+                                    <p><strong>예약 타입:</strong> ${reservation.reservationType}</p>
+                                </div>
                             `;
                         });
                     }
 
-                    modalContent.html(reservationsHTML); // 예약 정보 업데이트
-                    modal.show(); // 모달 창 열기
+                    modalContent.html(reservationsHTML);
+                    modal.modal('show'); // Bootstrap 모달 표시
                 },
                 error: function() {
                     alert('예약 정보를 불러오는 데 실패했습니다.');
                 }
             });
-        });
-
-        // 닫기 버튼 클릭 시
-        $('.close-btn').click(function() {
-            modal.hide(); // 모달 창 닫기
-        });
-
-        // 모달 창 외부 클릭 시 닫기
-        $(window).click(function(event) {
-            if ($(event.target).is(modal)) {
-                modal.hide();
-            }
         });
     });
 </script>

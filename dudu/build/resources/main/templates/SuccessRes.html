@@ -1,14 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>예약 완료</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .success-container {
+            max-width: 600px;
+            margin: 80px auto;
+        }
+        .card {
+            border-radius: 10px;
+        }
+        .card-header {
+            background-color: #28a745;
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .btn-back {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
-<body>
-<h1>예약 성공 페이지</h1>
-<p>학생 ID: <span th:text="${dto.studentId}">학생 ID 없음</span></p>
-<p>캐비닛 ID: <span th:text="${dto.cabinetId}">캐비닛 ID 없음</span></p>
-<p>예약 시작 시간: <span th:text="${dto.reservationStartTime}">시작 시간 없음</span></p>
-<p>예약 종료 시간: <span th:text="${dto.reservationEndTime}">종료 시간 없음</span></p>
+<body class="bg-light">
+<div class="container success-container">
+    <div class="card">
+        <div class="card-header text-center">
+            예약 성공
+        </div>
+        <div class="card-body">
+            <p><strong>학생 ID:</strong> <span th:text="${dto.studentId}">학생 ID 없음</span></p>
+            <p><strong>캐비닛 ID:</strong> <span th:text="${dto.cabinetId}">캐비닛 ID 없음</span></p>
+            <p><strong>예약 시작 시간:</strong> <span th:text="${#dates.format(dto.reservationStartTime, 'yyyy-MM-dd HH:mm')}">시작 시간 없음</span></p>
+            <p><strong>예약 종료 시간:</strong> <span th:text="${#dates.format(dto.reservationEndTime, 'yyyy-MM-dd HH:mm')}">종료 시간 없음</span></p>
+            <p><strong>예약 타입:</strong> <span th:text="${dto.reservationType}">예약 타입 없음</span></p>
+            <!-- 메인페이지로 돌아가기 버튼 -->
+            <a href="/student/main" class="btn btn-primary btn-back">메인페이지로 돌아가기</a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS 및 종속성 (jQuery, Popper.js) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
 </html>

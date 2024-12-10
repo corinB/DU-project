@@ -9,16 +9,19 @@
             max-width: 900px;
             margin: 50px auto;
         }
+
         .card-header {
             font-size: 1.8rem;
             font-weight: 600;
         }
+
         .cabinet-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 15px;
             margin-top: 20px;
         }
+
         .cabinet-item {
             padding: 20px;
             text-align: center;
@@ -31,11 +34,13 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
+
         .cabinet-item.reserved {
             background-color: #f8d7da;
             color: #721c24;
             border-color: #f5c6cb;
         }
+
         .cabinet-item:hover {
             background-color: #28a745 !important;
             color: white;
@@ -48,7 +53,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
 
@@ -61,7 +66,7 @@
             background: white;
             padding: 20px 30px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 80%;
             max-width: 600px;
             max-height: 80%;
@@ -81,27 +86,78 @@
             cursor: pointer;
         }
 
-        #reservationList {
-            max-height: 300px;
+        .reservation-entry {
+            background: #f8f9fa;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .reservation-entry h5 {
+            margin-bottom: 10px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .reservation-entry p {
+            margin: 5px 0;
+        }
+
+        #studentPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 50%;
+            max-height: 80%;
             overflow-y: auto;
-            padding-right: 10px;
+            z-index: 2000;
+        }
+
+        #studentPopup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .student-info-card {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-info-card h5 {
+            margin-bottom: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="card">
-        <div class="card-header text-center">
-            사물함 상태 조회
-        </div>
+        <div class="card-header text-center">사물함 상태 조회</div>
         <div class="card-body">
             <div class="cabinet-grid">
                 <div th:each="cabinet : ${cabinets}"
                      th:classappend="${cabinet.canReserve} ? 'available' : 'reserved'"
                      class="cabinet-item"
                      th:data-id="${cabinet.cabinetId}">
-                    <span th:text="'사물함 ID: ' + ${cabinet.cabinetId}"></span>
-                    <br/>
+                    <span th:text="'사물함 ID: ' + ${cabinet.cabinetId}"></span><br/>
                     <small th:text="${cabinet.department}"></small>
                 </div>
             </div>
@@ -109,12 +165,19 @@
     </div>
 </div>
 
-<!-- 팝업 오버레이 및 팝업 창 -->
+<!-- 팝업 -->
 <div id="popupOverlay"></div>
 <div id="popupModal">
     <button class="close-btn" id="closePopup">닫기</button>
     <h3>예약 리스트</h3>
     <div id="reservationList">조회 중...</div>
+</div>
+
+<!-- 학생 정보 팝업 -->
+<div id="studentPopup">
+    <button class="close-btn" id="closeStudentPopup">닫기</button>
+    <h3>학생 정보</h3>
+    <div id="studentInfoContent">조회 중...</div>
 </div>
 
 <script>
@@ -124,13 +187,13 @@
         const popupModal = document.getElementById("popupModal");
         const closePopupBtn = document.getElementById("closePopup");
         const reservationListContainer = document.getElementById("reservationList");
+        const studentPopup = document.getElementById("studentPopup");
+        const closeStudentPopupBtn = document.getElementById("closeStudentPopup");
+        const studentInfoContent = document.getElementById("studentInfoContent");
 
-        // 사물함 클릭 시 팝업 열기
         cabinetItems.forEach(item => {
             item.addEventListener("click", function () {
                 const cabinetId = this.dataset.id;
-
-                // Ajax 요청으로 예약 리스트 가져오기
                 fetch(`/search/cabinet/reservation?cabinet-id=${cabinetId}`)
                     .then(response => response.json())
                     .then(data => {
@@ -140,17 +203,40 @@
                             reservationListContainer.innerHTML = "<p>예약 내역 없음</p>";
                         } else {
                             data.forEach(reservation => {
-                                const div = document.createElement("div");
-                                div.innerHTML = `
-                                    <strong>학생 ID:</strong> ${reservation.studentId}<br/>
-                                    <strong>예약 유형:</strong> ${reservation.reservationType}<br/>
-                                    <strong>시작 날짜:</strong> ${new Date(reservation.reservationStartTime).toLocaleString()}<br/>
-                                    <strong>종료 날짜:</strong> ${new Date(reservation.reservationEndTime).toLocaleString()}<br/><hr/>
+                                const entry = document.createElement("div");
+                                entry.classList.add("reservation-entry");
+                                entry.innerHTML = `
+                                    <h5>학생 ID: ${reservation.studentId}</h5>
+                                    <p><strong>예약 유형:</strong> ${reservation.reservationType}</p>
+                                    <p><strong>시작 날짜:</strong> ${new Date(reservation.reservationStartTime).toLocaleString()}</p>
+                                    <p><strong>종료 날짜:</strong> ${new Date(reservation.reservationEndTime).toLocaleString()}</p>
+                                    <button class="view-student-btn btn btn-primary" data-student-id="${reservation.studentId}">학생 정보 조회</button>
                                 `;
-                                reservationListContainer.appendChild(div);
+                                reservationListContainer.appendChild(entry);
+
+                                entry.querySelector(".view-student-btn").addEventListener("click", function () {
+                                    const studentId = this.dataset.studentId;
+
+                                    fetch(`/search/manager?student-id=${studentId}`)
+                                        .then(response => response.json())
+                                        .then(student => {
+                                            studentInfoContent.innerHTML = `
+                                                <div class="student-info-card">
+                                                    <h5>학생 정보</h5>
+                                                    <p><strong>학생 ID:</strong> ${student.studentId}</p>
+                                                    <p><strong>이름:</strong> ${student.studentName}</p>
+                                                    <p><strong>학과:</strong> ${student.department}</p>
+                                                </div>
+                                            `;
+                                            studentPopup.style.display = "block";
+                                        })
+                                        .catch(error => {
+                                            console.error("학생 정보 조회 오류:", error);
+                                            studentInfoContent.innerHTML = "<p>오류 발생. 다시 시도하세요.</p>";
+                                        });
+                                });
                             });
                         }
-
                         popupOverlay.style.display = "block";
                         popupModal.style.display = "block";
                     })
@@ -161,16 +247,18 @@
             });
         });
 
-        // 팝업 닫기 버튼
         closePopupBtn.addEventListener("click", function () {
             popupOverlay.style.display = "none";
             popupModal.style.display = "none";
         });
 
-        // 오버레이 클릭 시 팝업 닫기
         popupOverlay.addEventListener("click", function () {
             popupOverlay.style.display = "none";
             popupModal.style.display = "none";
+        });
+
+        closeStudentPopupBtn.addEventListener("click", function () {
+            studentPopup.style.display = "none";
         });
     });
 </script>

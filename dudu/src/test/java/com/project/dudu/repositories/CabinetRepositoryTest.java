@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -19,8 +21,13 @@ class CabinetRepositoryTest {
     @Transactional
     @Rollback(value = false)
     public void addCabinet() {
-        for (long i = 0; i < 10; i++) {
-            var cabinet = CabinetEntity.builder().cabinetId(i).department(Colleges.Engineering).build();
+        for (int i = 0; i < 10; i++) {
+            var cabinet = CabinetEntity.builder()
+                    // .cabinetId(i) // 제거: 자동 생성되도록 설정
+                    .department(Colleges.Engineering)
+                    .createAt(LocalDateTime.now()) // 필요한 경우 추가
+                    .updateAt(LocalDateTime.now()) // 필요한 경우 추가
+                    .build();
             cabinetRepository.save(cabinet);
         }
     }
@@ -29,13 +36,17 @@ class CabinetRepositoryTest {
     @Transactional
     @Rollback(value = false)
     public void save220Cabinet() {
-        Colleges [] colleges = Colleges.values();
+        Colleges[] colleges = Colleges.values();
         for (Colleges college : colleges) {
-            for (long i = 0; i < 20; i++) {
-                var cabinet = CabinetEntity.builder().department(college).build();
+            for (int i = 0; i < 20; i++) {
+                var cabinet = CabinetEntity.builder()
+                        // .cabinetId(i) // 제거: 자동 생성되도록 설정
+                        .department(college)
+                        .createAt(LocalDateTime.now()) // 필요한 경우 추가
+                        .updateAt(LocalDateTime.now()) // 필요한 경우 추가
+                        .build();
                 cabinetRepository.save(cabinet);
             }
-            }
         }
-
+    }
 }

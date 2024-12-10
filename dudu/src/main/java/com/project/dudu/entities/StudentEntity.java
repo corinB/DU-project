@@ -10,6 +10,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -38,9 +39,9 @@ public class StudentEntity implements IEntityAdapter<LocalDateTime> {
     private LocalDateTime updateAt;
 
     // 관계 설정
-    @OneToMany(mappedBy = "student")
-    @ToString.Exclude
     @Builder.Default
+    @ToString.Exclude
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ReservationEntity> reservationList = new ArrayList<>();
 
     public StudentDto toDto() {
@@ -48,6 +49,11 @@ public class StudentEntity implements IEntityAdapter<LocalDateTime> {
                 .studentId(this.studentId)
                 .studentName(this.studentName)
                 .department(this.department.getName())
+                .createAt(this.createAt)
+                .updateAt(this.updateAt)
+                .reservations(this.reservationList.stream()
+                        .map(ReservationEntity::toDto)
+                        .collect(Collectors.toList()))
                 .build();
     }
 }

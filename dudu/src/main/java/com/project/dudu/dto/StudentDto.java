@@ -5,6 +5,9 @@ import com.project.dudu.entities.StudentEntity;
 import com.project.dudu.enums.Colleges;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,6 +26,15 @@ public class StudentDto {
     @JsonProperty(value = "department")
     private String department;
 
+    @JsonProperty("create_at")
+    private LocalDateTime createAt;
+
+    @JsonProperty("update_at")
+    private LocalDateTime updateAt;
+
+    @JsonProperty("reservations")
+    private List<ReservationDto> reservations;
+
     // 필드 값을 설정하는 생성자
     public StudentDto(Long studentId, String studentName, String password) {
         this.studentId = studentId;
@@ -35,6 +47,14 @@ public class StudentDto {
         return Colleges.getByName(this.department);
     }
 
-    public StudentEntity toEntity() { return StudentEntity.builder().studentId(this.studentId).studentName(this.studentName).password(this.password).department(this.getCollege()).build(); }
-
+    public StudentEntity toEntity() {
+        return StudentEntity.builder()
+                .studentId(this.studentId)
+                .studentName(this.studentName)
+                .password(this.password)
+                .department(this.getCollege())
+                .createAt(this.createAt)
+                .updateAt(this.updateAt)
+                .build();
+    }
 }

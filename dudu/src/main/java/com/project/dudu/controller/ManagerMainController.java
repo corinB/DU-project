@@ -2,10 +2,14 @@ package com.project.dudu.controller;
 
 import com.project.dudu.dto.LostItemReportDto;
 import com.project.dudu.dto.ManagerDto;
+import com.project.dudu.dto.StudentDto;
 import com.project.dudu.service.LostItemReportService;
 import com.project.dudu.service.ManagerService;
+import com.project.dudu.service.SearchService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,7 @@ public class ManagerMainController {
 
     private final ManagerService managerService;
     private final LostItemReportService lostItemReportService;
+    private final SearchService searchService;
 
 
     // 관리자 메인 페이지 반환
@@ -142,6 +147,56 @@ public class ManagerMainController {
         return "LostItemReport";  // 검색 결과를 목록 페이지에 표시
     }
 
-    // 추가로 필요한 관리자 기능들을 이곳에 작성하면 됩니다.
+    @GetMapping("/students/search")
+    public String showStudentSearchPage(Model model, Pageable pageable) {
+        // 기본적으로 모든 학생 정보를 페이징하여 표시
+        Page<StudentDto> students = searchService.searchAllStudent(pageable);
+        model.addAttribute("students", students);
+        model.addAttribute("searchType", "all");
+        model.addAttribute("searchWord", "");
+        return "StudentsSearch"; // StudentsSearch.html 반환
+    }
 
+    /**
+     * 학생 정보 검색 요청 처리
+     */
+    @GetMapping("/students/search/results")
+    public String searchStudents(
+            @RequestParam(name = "type", defaultValue = "all") String type,
+            @RequestParam(name = "searchWord", required = false) String searchWord,
+            Pageable pageable,
+            Model model) {
+
+        Page<StudentDto> students;
+
+        switch (type) {
+            case "name":
+                students = searchService.searchByName(searchWord, pageable);
+                break;
+            case "department":
+                students = searchService.searchByDepartment(searchWord, pageable);
+                break;
+            case "studentId":
+                // 학번으로 검색할 경우 별도의 메서드를 사용할 수 있습니다.
+                StudentDto student = searchService.searchByStudentId(Long.parseLong(searchWord));
+                if (student != null) {
+                    students = Page.empty(pageable).map(s -> student);
+                } else {
+                    students = Page.empty(pageable);
+                }
+                break;
+            case "all":
+            default:
+                students = searchService.searchAllStudent(pageable);
+                break;
+        }
+
+        model.addAttribute("students", students);
+        model.addAttribute("searchType", type);
+        model.addAttribute("searchWord", searchWord);
+        return "StudentsSearch"; // StudentsSearch.html 반환
+    }
+
+    // 추가 할 관리자 기능들...
 }
+

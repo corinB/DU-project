@@ -18,21 +18,30 @@
             font-size: 1.5rem;
             margin-bottom: 10px;
         }
-        /* 추가된 스타일 */
         .search-form {
             margin-bottom: 20px;
+        }
+        .header-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>Lost Item Reports</h1>
+    <div class="header-buttons">
+        <h1>Lost Item Reports</h1>
+        <div>
+            <button onclick="location.href='/manager/main'" class="btn btn-outline-secondary">메인으로 돌아가기</button>
+        </div>
+    </div>
 
     <div class="text-right mb-3">
         <button onclick="location.href='/manager/lost-items/create'" class="btn btn-primary">New Report</button>
     </div>
 
-    <!-- 카테고리 검색 폼 추가 -->
+    <!-- 카테고리 검색 폼 -->
     <form th:action="@{/manager/lost-items/search/category}" method="get" class="form-inline mb-3 search-form">
         <select name="category" class="form-control mr-2">
             <option value="" disabled selected>카테고리 선택</option>
@@ -51,21 +60,37 @@
         <button type="submit" class="btn btn-outline-primary">카테고리로 검색</button>
     </form>
 
-    <!-- 분실물 신고 목록 -->
-    <div id="reports">
-        <div th:each="report : ${reports}" class="report-item">
-            <!-- 개별 신고 항목 -->
-            <a th:href="@{/manager/lost-items/{id}(id=${report.reportId})}">
-                <h2 th:text="${report.itemName}">Item Name</h2>
-            </a>
-            <p>Category: <span th:text="${report.category}">Category</span></p>
-            <p>Location: <span th:text="${report.foundLocation}">Location</span></p>
-            <p>Date Found: <span th:text="${#temporals.format(report.foundTime, 'yyyy-MM-dd HH:mm:ss')}">Date Found</span></p>
-            <form th:action="@{/manager/lost-items/{id}/delete(id=${report.reportId})}" method="post" style="display:inline;">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </div>
-    </div>
+    <!-- 분실물 신고 목록 테이블 -->
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>물품명</th>
+            <th>카테고리</th>
+            <th>습득 장소</th>
+            <th>습득 날짜</th>
+            <th>상태</th>
+            <th>관리</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="report : ${reports}">
+            <td th:text="${report.reportId}">1</td>
+            <td>
+                <a th:href="@{/manager/lost-items/{id}(id=${report.reportId})}" th:text="${report.itemName}">Item Name</a>
+            </td>
+            <td th:text="${report.category}">Category</td>
+            <td th:text="${report.foundLocation}">Location</td>
+            <td th:text="${#temporals.format(report.foundTime, 'yyyy-MM-dd HH:mm:ss')}">Date Found</td>
+            <td th:text="${report.status}">Status</td>
+            <td>
+                <form th:action="@{/manager/lost-items/{id}/delete(id=${report.reportId})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

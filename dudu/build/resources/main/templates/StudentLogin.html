@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <title>학생 로그인</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-        /* 추가적인 스타일이 필요하다면 여기에 작성하세요 */
-    </style>
 </head>
 <body>
 <div class="container mt-5">
     <h1 class="text-center">학생 로그인</h1>
 
-    <!-- 이미지 삽입 시작 -->
+    <!-- 이미지 클릭 시 메인 페이지로 이동 -->
     <div class="text-center my-4">
-        <img th:src="@{/images/logo.png}" alt="메인 이미지" width="400">
+        <a th:href="@{/dureservation}">
+            <img th:src="@{/images/logo.png}" alt="메인 이미지" width="400">
+        </a>
     </div>
-    <!-- 이미지 삽입 끝 -->
 
     <form action="/student/login" method="post" th:object="${studentDto}">
         <div class="form-group">

@@ -5,33 +5,54 @@
     <title>분실물 목록</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
-        /* 추가적인 스타일이 필요하다면 여기에 작성하세요 */
+        .container {
+            margin-top: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="text-center">분실물 목록</h1>
+<div class="container">
+    <h1>분실물 목록</h1>
+
+    <!-- 상태 필터 폼 -->
+    <form th:action="@{/student/lost-items/filter}" method="get" class="form-inline mb-4">
+        <label for="status" class="mr-2">상태 필터:</label>
+        <select id="status" name="status" class="form-control mr-2">
+            <option value="전체" selected>전체</option>
+            <option value="보관중">보관중</option>
+            <option value="폐기">폐기</option>
+            <option value="해결">해결</option>
+        </select>
+        <button type="submit" class="btn btn-outline-primary">검색</button>
+    </form>
+
     <table class="table table-bordered mt-4">
         <thead>
         <tr>
             <th>번호</th>
             <th>물품명</th>
+            <th>카테고리</th>
+            <th>습득 장소</th>
             <th>습득 날짜</th>
-            <th>위치</th>
-            <!-- 기타 필요한 컬럼 -->
+            <th>상태</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="item : ${lostItems}">
-            <td th:text="${item.reportId}"></td>
-            <td th:text="${item.itemName}"></td>
-            <td th:text="${item.foundTime}"></td>
-            <td th:text="${item.foundLocation}"></td>
-            <td th:text="${item.category}"></td>
-            <!-- 기타 필요한 데이터 -->
+            <td th:text="${item.reportId}">1</td>
+            <td th:text="${item.itemName}">물품명</td>
+            <td th:text="${item.category}">카테고리</td>
+            <td th:text="${item.foundLocation}">습득 장소</td>
+            <td th:text="${#temporals.format(item.foundTime, 'yyyy-MM-dd HH:mm:ss')}">습득 날짜</td>
+            <td th:text="${item.status}">상태</td>
         </tr>
         </tbody>
     </table>
+
     <div class="text-center">
         <a href="/student/main" class="btn btn-primary">메인 페이지로 돌아가기</a>
     </div>

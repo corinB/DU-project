@@ -25,4 +25,7 @@ public interface LostItemReportRepository extends JpaRepository<LostItemReportEn
     // 카테고리로 조회
     List<LostItemReportEntity> findByCategory(String category);
 
+    // 상태로 분실물 목록 조회 메서드
+    List<LostItemReportEntity> findByStatus(String status);
+
 }

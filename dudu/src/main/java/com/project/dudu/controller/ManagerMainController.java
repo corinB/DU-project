@@ -158,4 +158,14 @@ public class ManagerMainController {
         return "/managerPage/FindCabinet";
     }
 
+    // 상태 업데이트 메서드 추가
+    @PostMapping("/lost-items/{id}/updateStatus")
+    public String updateLostItemStatus(@PathVariable Long id, @RequestParam String newStatus, HttpSession session) {
+        if (session.getAttribute("manager") == null) {
+            return "redirect:/manager/login";
+        }
+        lostItemReportService.updateReportStatus(id, newStatus);
+        return "redirect:/manager/lost-items";
+    }
+
 }

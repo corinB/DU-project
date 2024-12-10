@@ -61,8 +61,4 @@ public class SearchController {
         log.info("student : {}", student);
         return searchService.findStudentReservation(studentId, pageable);
     }
-
-
-
-
 }

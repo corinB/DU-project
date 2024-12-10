@@ -1,17 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>예약 실패</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .failure-container {
+            max-width: 700px;
+            margin: 80px auto;
+        }
+        .card {
+            border-radius: 10px;
+        }
+        .card-header {
+            background-color: #dc3545; /* Bootstrap의 danger 색상 */
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .btn-back {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .list-group-item {
+            border: none;
+            padding-left: 0;
+        }
+        .list-group-item::before {
+            content: "• ";
+            color: #dc3545; /* 항목 앞의 점 색상 */
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body>
-<h1>예약 실패</h1>
-<p>죄송합니다. 예약이 실패하였습니다. 아래의 사유를 확인하시고 다시 시도해 주세요.</p>
-<ul>
-    <li>이미 해당 사물함이 예약 중일 수 있습니다.</li>
-    <li>이미 해당 학생에게 다른 예약이 존재할 수 있습니다.</li>
-    <li>입력하신 정보가 잘못되었을 수 있습니다.</li>
-</ul>
-<p>다시 시도하려면 <a href="/student/main/reserve">예약 페이지</a>로 돌아가세요.</p>
+<body class="bg-light">
+<div class="container failure-container">
+    <div class="card">
+        <div class="card-header text-center">
+            예약 실패
+        </div>
+        <div class="card-body">
+            <p class="card-text">죄송합니다. 예약이 실패하였습니다. 아래의 사유를 확인하시고 다시 시도해 주세요.</p>
+            <ul class="list-group">
+                <li class="list-group-item">이미 해당 사물함이 예약 중일 수 있습니다.</li>
+                <li class="list-group-item">이미 해당 학생에게 다른 예약이 존재할 수 있습니다.</li>
+                <li class="list-group-item">입력하신 정보가 잘못되었을 수 있습니다.</li>
+            </ul>
+            <!-- 메인페이지로 돌아가기 버튼 -->
+            <a href="/student/reserve" class="btn btn-danger btn-back">예약페이지로 돌아가기</a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS 및 종속성 (jQuery, Popper.js) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
 </html>

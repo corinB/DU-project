@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>사물함 상태 조회</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+        }
+        .card-header {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        .cabinet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .cabinet-item {
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: white;
+            color: black;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .cabinet-item.reserved {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .cabinet-item:hover {
+            background-color: #28a745 !important;
+            color: white;
+        }
+
+        #popupOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        #popupModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            width: 80%;
+            max-width: 600px;
+            max-height: 80%;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        #popupModal .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #reservationList {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center">
+            사물함 상태 조회
+        </div>
+        <div class="card-body">
+            <div class="cabinet-grid">
+                <div th:each="cabinet : ${cabinets}"
+                     th:classappend="${cabinet.canReserve} ? 'available' : 'reserved'"
+                     class="cabinet-item"
+                     th:data-id="${cabinet.cabinetId}">
+                    <span th:text="'사물함 ID: ' + ${cabinet.cabinetId}"></span>
+                    <br/>
+                    <small th:text="${cabinet.department}"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 팝업 오버레이 및 팝업 창 -->
+<div id="popupOverlay"></div>
+<div id="popupModal">
+    <button class="close-btn" id="closePopup">닫기</button>
+    <h3>예약 리스트</h3>
+    <div id="reservationList">조회 중...</div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cabinetItems = document.querySelectorAll(".cabinet-item");
+        const popupOverlay = document.getElementById("popupOverlay");
+        const popupModal = document.getElementById("popupModal");
+        const closePopupBtn = document.getElementById("closePopup");
+        const reservationListContainer = document.getElementById("reservationList");
+
+        // 사물함 클릭 시 팝업 열기
+        cabinetItems.forEach(item => {
+            item.addEventListener("click", function () {
+                const cabinetId = this.dataset.id;
+
+                // Ajax 요청으로 예약 리스트 가져오기
+                fetch(`/search/cabinet/reservation?cabinet-id=${cabinetId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        reservationListContainer.innerHTML = "";
+
+                        if (!data || data.length === 0) {
+                            reservationListContainer.innerHTML = "<p>예약 내역 없음</p>";
+                        } else {
+                            data.forEach(reservation => {
+                                const div = document.createElement("div");
+                                div.innerHTML = `
+                                    <strong>학생 ID:</strong> ${reservation.studentId}<br/>
+                                    <strong>예약 유형:</strong> ${reservation.reservationType}<br/>
+                                    <strong>시작 날짜:</strong> ${new Date(reservation.reservationStartTime).toLocaleString()}<br/>
+                                    <strong>종료 날짜:</strong> ${new Date(reservation.reservationEndTime).toLocaleString()}<br/><hr/>
+                                `;
+                                reservationListContainer.appendChild(div);
+                            });
+                        }
+
+                        popupOverlay.style.display = "block";
+                        popupModal.style.display = "block";
+                    })
+                    .catch(error => {
+                        console.error("예약 리스트 조회 오류:", error);
+                        reservationListContainer.innerHTML = "<p>오류 발생. 다시 시도하세요.</p>";
+                    });
+            });
+        });
+
+        // 팝업 닫기 버튼
+        closePopupBtn.addEventListener("click", function () {
+            popupOverlay.style.display = "none";
+            popupModal.style.display = "none";
+        });
+
+        // 오버레이 클릭 시 팝업 닫기
+        popupOverlay.addEventListener("click", function () {
+            popupOverlay.style.display = "none";
+            popupModal.style.display = "none";
+        });
+    });
+</script>
+</body>
+</html>

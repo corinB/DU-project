@@ -4,6 +4,7 @@ package com.project.dudu.controller;
 import com.project.dudu.dto.CabinetDto;
 import com.project.dudu.dto.ReservationDto;
 import com.project.dudu.dto.StudentDto;
+import com.project.dudu.service.ReservationService;
 import com.project.dudu.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +14,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/search")
 @RequiredArgsConstructor
 @Slf4j
 public class SearchController {
     private final SearchService searchService;
+    private final ReservationService reservationService;
 
     /**
      * Manager Search
@@ -62,6 +66,12 @@ public class SearchController {
         return searchService.findStudentReservation(studentId, pageable);
     }
 
+
+    @GetMapping(value = "/cabinet/reservation", params = "cabinet-id")
+    public List<ReservationDto> findReservation(@RequestParam(name = "cabinet-id") Long cabinetId) {
+        log.info("findReservation \n cabinetId : {}", cabinetId);
+        return reservationService.findAllByCabinetId(cabinetId);
+    }
 
 
 

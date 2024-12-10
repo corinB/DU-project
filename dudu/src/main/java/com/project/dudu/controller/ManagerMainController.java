@@ -2,22 +2,31 @@ package com.project.dudu.controller;
 
 import com.project.dudu.dto.LostItemReportDto;
 import com.project.dudu.dto.ManagerDto;
+import com.project.dudu.dto.ReservationDto;
 import com.project.dudu.service.LostItemReportService;
 import com.project.dudu.service.ManagerService;
+import com.project.dudu.service.ReservationService;
+import com.project.dudu.service.SearchService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 // 관리자 메인 컨트롤러
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/manager")
+@Slf4j
 public class ManagerMainController {
 
     private final ManagerService managerService;
     private final LostItemReportService lostItemReportService;
+    private final SearchService searchService;
+    private final ReservationService reservationService;
 
 
     // 관리자 메인 페이지 반환
@@ -142,6 +151,11 @@ public class ManagerMainController {
         return "LostItemReport";  // 검색 결과를 목록 페이지에 표시
     }
 
-    // 추가로 필요한 관리자 기능들을 이곳에 작성하면 됩니다.
+    @GetMapping("/cabinet")
+    public String findCabinet(@SessionAttribute(name = "manager", required = false) ManagerDto manager, Model model) {
+        var dto = searchService.cabinetSearchByDepartment(manager.getDepartment());
+        model.addAttribute("cabinets", dto);
+        return "/managerPage/FindCabinet";
+    }
 
 }

@@ -36,7 +36,7 @@ public class ReservationEntity implements IEntityAdapter<LocalDateTime> {
 
 
     //FK 설정
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "student_id")
     private StudentEntity student;
 
@@ -57,11 +57,12 @@ public class ReservationEntity implements IEntityAdapter<LocalDateTime> {
 
     public ReservationDto toDto() {
         return ReservationDto.builder()
-                .reservationType(reservationType.name())
-                .studentId(student.getStudentId())
-                .cabinetId(cabinet.getCabinetId())
-                .reservationStartTime(createAt)
-                .reservationEndTime(reservationTime)
+                .reservationId(this.reservationId)
+                .studentId(this.student.getStudentId())
+                .cabinetId(this.cabinet.getCabinetId())
+                .reservationType(this.reservationType.name())
+                .reservationStartTime(this.createAt)
+                .reservationEndTime(this.reservationTime)
                 .build();
     }
 

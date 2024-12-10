@@ -55,7 +55,7 @@ public class SearchController {
 
 
     @GetMapping("/reservation")
-    public Page<ReservationDto> findStudentReservation (@RequestParam(name = "student-id") Long studentId,
+    public Page<ReservationDto> findStudentReservation (@RequestParam(name = "studentId") Long studentId,
                                                         Pageable pageable) {
         var student = searchService.searchByStudentId(studentId);
         log.info("student : {}", student);

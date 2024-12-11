@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ReservationDto {
 
+    private Long reservationId;
     private Long studentId;
     private Long cabinetId;
     private String reservationType;

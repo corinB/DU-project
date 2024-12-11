@@ -41,7 +41,7 @@ public class StudentEntity implements IEntityAdapter<LocalDateTime> {
     // 관계 설정
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ReservationEntity> reservationList = new ArrayList<>();
 
     public StudentDto toDto() {

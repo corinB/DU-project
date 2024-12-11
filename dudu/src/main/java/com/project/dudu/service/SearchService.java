@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
@@ -63,7 +62,15 @@ public class SearchService {
     }
 
     public StudentDto searchByStudentId(Long studentId) {
-        return studentRepository.findById(studentId).map(StudentEntity::toDto).orElse(null);
+        return studentRepository.findById(studentId)
+                .map(student -> {
+                    StudentDto dto = student.toDto();
+                    dto.setReservations(student.getReservationList().stream()
+                            .map(ReservationEntity::toDto)
+                            .toList());
+                    return dto;
+                })
+                .orElse(null);
     }
 
     @Transactional

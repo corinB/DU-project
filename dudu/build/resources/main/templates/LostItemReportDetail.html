@@ -32,10 +32,20 @@
         <p>Location Found: <span th:text="${report.foundLocation}">Location</span></p>
         <p>Date Found: <span th:text="${#temporals.format(report.foundTime, 'yyyy-MM-dd HH:mm:ss')}">Date Found</span></p>
         <p>Reporter Name: <span th:text="${report.reporterName}">Reporter Name</span></p>
+
+        <!-- 상태 수정 폼 추가 -->
+        <form th:action="@{/manager/lost-items/{id}/updateStatus(id=${report.reportId})}" method="post" class="mt-3">
+            <label for="status">Status:</label>
+            <select id="status" name="newStatus" class="form-control w-25 d-inline">
+                <option th:selected="${report.status == '보관중'}" value="보관중">보관중</option>
+                <option th:selected="${report.status == '폐기'}" value="폐기">폐기</option>
+                <option th:selected="${report.status == '해결'}" value="해결">해결</option>
+            </select>
+            <button type="submit" class="btn btn-success ml-2">Update Status</button>
+        </form>
     </div>
 
     <div class="mt-3">
-        <!-- 목록 페이지로 돌아갈 때도 /manager 붙이기 -->
         <button onclick="location.href='/manager/lost-items'" class="btn btn-secondary">Back to List</button>
     </div>
 </div>

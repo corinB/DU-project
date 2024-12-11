@@ -32,4 +32,8 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
     Page<StudentEntity> findAllByStudentName(String studentName, Pageable page);
 
 
+    // 이름으로 검색 + 학과 필터
+    Page<StudentEntity> findAllByStudentNameAndDepartment(String name, Colleges department, Pageable pageable);
+
+
 }

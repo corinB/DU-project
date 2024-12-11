@@ -82,6 +82,16 @@ public class StudentMainController {
         return "StudentLostItems"; // 학생용 분실물 목록 페이지
     }
 
+    // 상태별 분실물 목록 필터링 메서드 (선택)
+    @GetMapping("/lost-items/filter")
+    public String filterLostItemsByStatus(@RequestParam String status, HttpSession session, Model model) {
+        if (session.getAttribute("student") == null) {
+            return "redirect:/student/login";
+        }
+        model.addAttribute("lostItems", lostItemReportService.searchByStatus(status));
+        return "StudentLostItems";
+    }
+
 //-------------------------------------------------------------------------------------------------------------
 
     // 추가로 필요한 학생 기능들을 이곳에 작성하면 됩니다.

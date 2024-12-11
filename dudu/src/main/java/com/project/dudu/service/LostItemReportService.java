@@ -4,7 +4,6 @@ import com.project.dudu.dto.LostItemReportDto;
 import com.project.dudu.entities.LostItemReportEntity;
 import com.project.dudu.repositories.LostItemReportRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 public class LostItemReportService {
 
     private final LostItemReportRepository lostItemReportRepository;
-
 
     // 모든 분실물 신고 조회
     public List<LostItemReportDto> getAllReports() {
@@ -42,6 +40,15 @@ public class LostItemReportService {
         lostItemReportRepository.deleteById(id);
     }
 
+    // 분실물 상태 변경
+    public void updateReportStatus(Long id, String newStatus) {
+        LostItemReportEntity report = lostItemReportRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID " + id + "의 신고를 찾을 수 없습니다."));
+        report.setStatus(newStatus);
+        report.setUpdateAt(LocalDateTime.now());
+        lostItemReportRepository.save(report);
+    }
+
     // 이름으로 신고 조회
     public List<LostItemReportDto> searchByItemName(String itemName) {
         return lostItemReportRepository.findByItemNameContaining(itemName).stream()
@@ -63,7 +70,7 @@ public class LostItemReportService {
                 .collect(Collectors.toList());
     }
 
-    // 카테고리로 신고 조회 (추가된 메서드)
+    // 카테고리로 신고 조회
     public List<LostItemReportDto> searchByCategory(String category) {
         return lostItemReportRepository.findByCategory(category).stream()
                 .map(this::convertToDto)
@@ -78,6 +85,13 @@ public class LostItemReportService {
                 .collect(Collectors.toList());
     }
 
+    // 상태별 분실물 목록 조회 메서드
+    public List<LostItemReportDto> searchByStatus(String status) {
+        return lostItemReportRepository.findByStatus(status).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     // Entity -> DTO 변환
     private LostItemReportDto convertToDto(LostItemReportEntity entity) {
         return new LostItemReportDto(
@@ -86,7 +100,8 @@ public class LostItemReportService {
                 entity.getCategory(),
                 entity.getFoundLocation(),
                 entity.getReporterName(),
-                entity.getFoundTime()
+                entity.getFoundTime(),
+                entity.getStatus()
         );
     }
 
@@ -99,12 +114,13 @@ public class LostItemReportService {
                 .foundTime(dto.getFoundTime())
                 .foundLocation(dto.getFoundLocation())
                 .reporterName(dto.getReporterName())
+                .status(dto.getStatus() == null ? "보관중" : dto.getStatus())
                 .createAt(LocalDateTime.now())
                 .updateAt(LocalDateTime.now())
                 .build();
     }
 
-    // ID 존재 여부 확인 (추가된 메서드, 삭제 시 사용)
+    // ID 존재 여부 확인
     public boolean existsById(Long id) {
         return lostItemReportRepository.existsById(id);
     }

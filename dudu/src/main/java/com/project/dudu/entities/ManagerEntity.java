@@ -1,5 +1,6 @@
 package com.project.dudu.entities;
 
+import com.project.dudu.dto.ManagerDto;
 import com.project.dudu.entities.util.DefaultListener;
 import com.project.dudu.entities.util.IEntityAdapter;
 import com.project.dudu.enums.Colleges;
@@ -40,5 +41,15 @@ public class ManagerEntity implements IEntityAdapter<LocalDateTime> {
     private LocalDateTime createAt;
     @Column(name = "update_at")
     private LocalDateTime updateAt;
+
+    public ManagerDto toDto() {
+        return ManagerDto.builder()
+                .id(id)
+                .email(email)
+                .password(password)
+                .name(name)
+                .department(department.getName())
+                .build();
+    }
 
 }

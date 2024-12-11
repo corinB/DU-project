@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>학생 정보 검색</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         .search-container {
@@ -75,10 +74,11 @@
                     <tr th:if="${student != null and student.reservationList != null and !student.reservationList.isEmpty()}" class="reservation-details">
                         <td colspan="6">
                             <ul>
-                                <li th:each="reservation : ${student.reservationList}">
-                                    <strong>예약 ID:</strong> <span th:text="${reservation.reservationId}">예약 ID</span>,
-                                    <strong>날짜:</strong> <span th:text="${#temporals.format(reservation.reservationDate, 'yyyy-MM-dd HH:mm')}">예약 날짜</span>,
-                                    <strong>상세:</strong> <span th:text="${reservation.details}">상세 정보</span>
+                                <li>
+                                    <strong>예약 ID:</strong> <span th:text="${reservation.reservationId}">예약 ID</span><br>
+                                    <strong>예약 유형:</strong> <span th:text="${reservation.reservationType}">예약 유형</span><br>
+                                    <strong>시작 시간:</strong> <span th:text="${#temporals.format(reservation.reservationStartTime, 'yyyy-MM-dd HH:mm')}">시작 시간</span><br>
+                                    <strong>종료 시간:</strong> <span th:text="${#temporals.format(reservation.reservationEndTime, 'yyyy-MM-dd HH:mm')}">종료 시간</span><br>
                                 </li>
                             </ul>
                         </td>
@@ -98,10 +98,8 @@
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item" th:each="i : ${#numbers.sequence(0, students.totalPages -1)}"
-                            th:classappend="${i == students.number} ? 'active'">
-                            <a class="page-link" th:href="@{/manager/students/search/results(type=${searchType}, searchWord=${searchWord}, page=${i}, size=${students.size})}"
-                               th:text="${i + 1}">1</a>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(0, students.totalPages -1)}" th:classappend="${i == students.number} ? 'active'">
+                            <a class="page-link" th:href="@{/manager/students/search/results(type=${searchType}, searchWord=${searchWord}, page=${i}, size=${students.size})}" th:text="${i + 1}">1</a>
                         </li>
                         <li class="page-item" th:classappend="${students.last} ? 'disabled'">
                             <a class="page-link" th:href="@{/manager/students/search/results(type=${searchType}, searchWord=${searchWord}, page=${students.number + 1}, size=${students.size})}" aria-label="Next">
@@ -115,7 +113,6 @@
     </div>
 </div>
 
-<!-- Bootstrap JS 및 종속성 (jQuery, Popper.js) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

@@ -17,11 +17,22 @@
             padding: 15px;
             margin-bottom: 15px;
         }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body class="bg-light">
 <div class="container mt-5">
-    <h1 class="text-center mb-4">내 정보</h1>
+    <div class="header">
+        <h1>내 정보</h1>
+        <!-- 메인으로 돌아가기 버튼 추가 -->
+        <button class="btn btn-outline-secondary" onclick="location.href='/student/main'">메인페이지로 돌아가기</button>
+    </div>
+
     <div class="card p-4">
         <p><strong>학생 ID:</strong> <span th:text="${dto.studentId}" id="studentId">학생 ID 없음</span></p>
         <p><strong>학생 이름:</strong> <span th:text="${dto.studentName}">학생 이름 없음</span></p>

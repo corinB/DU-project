@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,12 @@
         .container {
             max-width: 900px;
             margin: 50px auto;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .card-header {
@@ -46,18 +52,7 @@
             color: white;
         }
 
-        #popupOverlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        #popupModal {
+        #popupOverlay, #popupModal, #studentPopup {
             display: none;
             position: fixed;
             top: 50%;
@@ -74,7 +69,7 @@
             z-index: 1000;
         }
 
-        #popupModal .close-btn {
+        .close-btn {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -84,73 +79,18 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-        }
-
-        .reservation-entry {
-            background: #f8f9fa;
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .reservation-entry h5 {
-            margin-bottom: 10px;
-            color: black;
-            font-weight: bold;
-        }
-
-        .reservation-entry p {
-            margin: 5px 0;
-        }
-
-        #studentPopup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 50%;
-            max-height: 80%;
-            overflow-y: auto;
-            z-index: 2000;
-        }
-
-        #studentPopup .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #dc3545;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .student-info-card {
-            background: #e9ecef;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .student-info-card h5 {
-            margin-bottom: 10px;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="card">
-        <div class="card-header text-center">사물함 상태 조회</div>
+        <div class="card-header header-container">
+            <span class="text-center">사물함 상태 조회</span>
+            <!-- 메인으로 돌아가기 버튼 -->
+            <button class="btn btn-outline-secondary" onclick="location.href='/manager/main'">메인페이지로 돌아가기</button>
+        </div>
+
         <div class="card-body">
             <div class="cabinet-grid">
                 <div th:each="cabinet : ${cabinets}"
@@ -248,11 +188,6 @@
         });
 
         closePopupBtn.addEventListener("click", function () {
-            popupOverlay.style.display = "none";
-            popupModal.style.display = "none";
-        });
-
-        popupOverlay.addEventListener("click", function () {
             popupOverlay.style.display = "none";
             popupModal.style.display = "none";
         });

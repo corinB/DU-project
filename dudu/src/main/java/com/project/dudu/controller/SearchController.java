@@ -71,4 +71,12 @@ public class SearchController {
         log.info("findReservation \n cabinetId : {}", cabinetId);
         return reservationService.findAllByCabinetId(cabinetId);
     }
+
+    @GetMapping(value = "/student/reservation", params = "student-id")
+    public Page<ReservationDto> findReservation_student(@RequestParam(name = "student-id") Long studentId,
+                                                        @RequestParam(name = "page", defaultValue = "0" ) int page) {
+        Pageable pageable = PageRequest.of(page, 5, Sort.by("createAt").descending());
+        log.info("findReservation \n studentId : {}", studentId);
+        return searchService.findStudentReservation(studentId, pageable);
+    }
 }

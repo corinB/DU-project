@@ -10,6 +10,10 @@ import com.project.dudu.service.SearchService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -166,6 +170,15 @@ public class ManagerMainController {
         }
         lostItemReportService.updateReportStatus(id, newStatus);
         return "redirect:/manager/lost-items";
+    }
+
+    @GetMapping(value = "/student")
+    public String findStudent(@SessionAttribute(name = "manager") ManagerDto manager,@RequestParam(name = "page", defaultValue = "0" ) int page ,Model model) {
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("studentId").ascending());
+        var studentList = searchService.searchForManager("department",manager.getDepartment(), pageable);
+        model.addAttribute("studentList", studentList);
+        model.addAttribute("page", page);
+        return "/managerPage/FindStudent";
     }
 
 }

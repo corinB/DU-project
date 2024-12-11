@@ -89,6 +89,8 @@ public class SearchService {
     public Page<ReservationDto> findStudentReservation(Long studentId, Pageable pageable) {
         return reservationRepository.findAllByStudentId(studentId, pageable).map(ReservationEntity::toDto);
     }
+
+
     //*******************************************************************************************
 
     @Transactional

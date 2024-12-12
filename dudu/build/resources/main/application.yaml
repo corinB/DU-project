@@ -10,10 +10,9 @@ spring:
 
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/du?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
-#    url: jdbc:mysql://127.0.0.1:3306/dudu?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
     username: root
-    password: aaaaaaaa
-#    password: qorwhdgus!!100
+#    password: aaaaaaaa
+    password: qorwhdgus!!100
 
 
   jpa:

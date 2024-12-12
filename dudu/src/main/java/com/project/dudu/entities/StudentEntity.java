@@ -21,15 +21,18 @@ import java.util.stream.Collectors;
 @Table(name = "Student_T")
 @EntityListeners(value = DefaultListener.class)
 public class StudentEntity implements IEntityAdapter<LocalDateTime> {
+
     @Id
     private long studentId;
 
+    @Column(length = 20, nullable = false)
     private String password;
 
+    @Column(length = 50, nullable = false)
     private String studentName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "department")
+    @Column(name = "department", nullable = false)
     private Colleges department;
 
     @Column(name = "create_at")

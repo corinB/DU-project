@@ -159,7 +159,7 @@ public class ManagerMainController {
     public String findCabinet(@SessionAttribute(name = "manager", required = false) ManagerDto manager, Model model) {
         var dto = searchService.cabinetSearchByDepartment(manager.getDepartment());
         model.addAttribute("cabinets", dto);
-        return "/managerPage/FindCabinet";
+        return "FindCabinet";
     }
 
     // 상태 업데이트 메서드 추가
@@ -178,7 +178,7 @@ public class ManagerMainController {
         var studentList = searchService.searchForManager("department",manager.getDepartment(), pageable);
         model.addAttribute("studentList", studentList);
         model.addAttribute("page", page);
-        return "/managerPage/FindStudent";
+        return "FindStudent";
     }
 
 }

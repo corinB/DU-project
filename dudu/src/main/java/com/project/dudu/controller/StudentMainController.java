@@ -131,14 +131,14 @@ public class StudentMainController {
         var studentId = student.getStudentId();
         var dto = searchService.searchByStudentId(studentId);
         model.addAttribute("dto", dto);
-        return "/StudentPage/MyInfo";
+        return "MyInfo";
     }
 
     @GetMapping(value = "/cabinet", params = "department")
     public String findCabinet(@RequestParam(name = "department") String department,Model model) {
         var dto = searchService.cabinetSearchByDepartment(department);
         model.addAttribute("dto", dto);
-        return "/StudentPage/Cabinet";
+        return "Cabinet";
     }
 
 }

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>학생 목록</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+        }
+        .card-header {
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .student-entry {
+            background: #ffffff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .student-entry h5 {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* 팝업 스타일 */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .popup-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 60%;
+            max-width: 500px;
+            max-height: 80%;
+            overflow-y: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+        .popup-modal h3 {
+            margin-bottom: 15px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .reservation-entry {
+            background: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <span>학생 목록</span>
+            <button class="btn btn-outline-secondary" onclick="location.href='/manager/main'">메인 페이지로 돌아가기</button>
+        </div>
+        <div class="card-body">
+            <div th:if="${#lists.isEmpty(studentList)}">
+                <p>학생 목록이 없습니다.</p>
+            </div>
+            <div th:each="student : ${studentList.content}" class="student-entry">
+                <h5 th:text="'학생 ID: ' + ${student.studentId}"></h5>
+                <p><strong>이름:</strong> <span th:text="${student.studentName}"></span></p>
+                <p><strong>학과:</strong> <span th:text="${student.department}"></span></p>
+                <button class="btn btn-primary reservation-btn"
+                        th:data-student-id="${student.studentId}">예약 기록 조회</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 예약 팝업 -->
+    <div id="popupOverlay" class="popup-overlay"></div>
+    <div id="popupModal" class="popup-modal">
+        <button class="close-btn" id="closePopup">닫기</button>
+        <h3>예약 기록</h3>
+        <div id="reservationList">조회 중...</div>
+        <ul id="paginationNav" class="pagination"></ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const reservationBtns = document.querySelectorAll(".reservation-btn");
+        const popupOverlay = document.getElementById("popupOverlay");
+        const popupModal = document.getElementById("popupModal");
+        const reservationListContainer = document.getElementById("reservationList");
+        const paginationNav = document.getElementById("paginationNav");
+        const closePopupBtn = document.getElementById("closePopup");
+
+        reservationBtns.forEach(button => {
+            button.addEventListener("click", function () {
+                const studentId = this.dataset.studentId;
+                fetchReservations(studentId);
+            });
+        });
+
+        function fetchReservations(studentId, page = 0) {
+            fetch(`/search/student/reservation?student-id=${studentId}&page=${page}`)
+                .then(response => response.json())
+                .then(data => {
+                    reservationListContainer.innerHTML = "";
+                    paginationNav.innerHTML = "";
+
+                    if (!data || data.content.length === 0) {
+                        reservationListContainer.innerHTML = "<p>예약 내역 없음</p>";
+                        popupOverlay.style.display = "block";
+                        popupModal.style.display = "block";
+                        return;
+                    }
+
+                    data.content.forEach(reservation => {
+                        const entry = document.createElement("div");
+                        entry.classList.add("reservation-entry");
+                        entry.innerHTML = `
+                            <strong>예약 ID:</strong> ${reservation.reservationId}<br>
+                            <strong>사물함 ID:</strong> ${reservation.cabinetId}<br>
+                            <strong>예약 유형:</strong> ${reservation.reservationType}<br>
+                            <strong>시작일:</strong> ${new Date(reservation.reservationStartTime).toLocaleString()}<br>
+                            <strong>종료일:</strong> ${new Date(reservation.reservationEndTime).toLocaleString()}<br>
+                            <hr>
+                        `;
+                        reservationListContainer.appendChild(entry);
+                    });
+
+                    createPagination(data, studentId);
+
+                    // 팝업 열기 및 스크롤 초기화
+                    popupOverlay.style.display = "block";
+                    popupModal.style.display = "block";
+                    popupModal.scrollTo(0, 0);
+                })
+                .catch(error => {
+                    console.error("예약 기록 조회 오류:", error);
+                    reservationListContainer.innerHTML = "<p>오류 발생. 다시 시도하세요.</p>";
+                });
+        }
+
+        function createPagination(data, studentId) {
+            if (data.totalPages <= 1) return;
+
+            const createPageLink = (page, label, disabled = false) => `
+                <li class="page-item ${disabled ? 'disabled' : ''}">
+                    <a class="page-link" href="#" data-page="${page}">${label}</a>
+                </li>`;
+
+            paginationNav.innerHTML += createPageLink(data.number - 1, "이전", data.first);
+
+            for (let i = 0; i < data.totalPages; i++) {
+                paginationNav.innerHTML += `
+                    <li class="page-item ${data.number === i ? 'active' : ''}">
+                        <a class="page-link" href="#" data-page="${i}">${i + 1}</a>
+                    </li>`;
+            }
+
+            paginationNav.innerHTML += createPageLink(data.number + 1, "다음", data.last);
+
+            paginationNav.querySelectorAll("a.page-link").forEach(link => {
+                link.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    fetchReservations(studentId, page);
+
+                    // 스크롤 초기화
+                    popupModal.scrollTo(0, 0);
+                });
+            });
+        }
+
+        closePopupBtn.addEventListener("click", function () {
+            popupOverlay.style.display = "none";
+            popupModal.style.display = "none";
+        });
+
+        popupOverlay.addEventListener("click", function () {
+            popupOverlay.style.display = "none";
+            popupModal.style.display = "none";
+        });
+    });
+</script>
+</body>
+</html>
